@@ -1,3 +1,7 @@
+---
+layout: page
+title: Projects
+---
 
 **Monocular Depth Estimation using Transfer Learning with focus on complex scenarios** (June 2021 – August 2021)
 *	Concept of Transfer Learning was used to develop three monocular depth estimation approaches, as an alternative to the currently used expensive and limited LIDAR solutions. 
