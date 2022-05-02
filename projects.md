@@ -1,6 +1,6 @@
 ---
 layout: page
-title: 
+title:    
 ---
 ## Projects
 **Monocular Depth Estimation using Transfer Learning with focus on complex scenarios** (June 2021 – August 2021)
