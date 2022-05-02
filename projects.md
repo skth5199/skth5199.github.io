@@ -9,8 +9,8 @@
 *	The Estimator accepted a database logical query and estimated the total cost in terms of disk accesses
 *	The Optimizer optimised a given query by pushing down the Selects, creating Joins and adding Projects
 
-**HqOS: Threat Analysis** (February 2021)
-Team size: 6
+**HqOS: Threat Analysis** (February 2021)  
+_Team size: 6_
 *	The product’s website and whitepaper were analysed, the vulnerable Assets involved were highlighted
 *	Misuse cases and security cases were designed
 *	System and Security requirements were elicited and DFD diagrams were used to illustrate the same
@@ -21,18 +21,18 @@ Team size: 6
 *	Five tweet classification approaches were presented and critically analysed in depth
 *	The approaches were then ranked based on this analysis
 
-**Data Swiss Knife** (March 2020) </br>
-Team size: 3 
+**Data Swiss Knife** (March 2020)
+_Team size: 3_ 
 *	Automated the data cleaning, modification, and model generation (machine learning models and deep learning)
 *	The Deep learning models were automatically improved iteratively, based on the generated baseline model’s results
 
-**Automated Negotiation Agent** (January 2021) </br>
-Team size: 3 
+**Automated Negotiation Agent** (January 2021)
+_Team size: 3_ 
 *	User and opponent modelling, along with bidding strategy were engineered for the agent 
 *	The agent was designed for a league with a closed setting and preference uncertainly enabled
 
-**Wallee: Payment wallet**	(February 2019 – April 2019) </br>
-Team size: 6
+**Wallee: Payment wallet**	(February 2019 – April 2019)
+_Team size: 6_
 *	Worked as the lead developer who assigned tasks to the other developers, developed backend modules and was responsible for seamless integration of the frontend with the backend
 *	Django web framework and MySQL were used, and Scrum framework was followed for the development
 *	Oversaw resolving of bugs that were discovered by the testers during the testing phase
