@@ -15,7 +15,8 @@ author: Srivenkata Srikanth
 
 navbar-links:
   About Me: "aboutme"
-  Projects and Publications: "projects"
+  Projects: "projects"
+  Publications: "publications"
   CV: "cv"
 
 # --- Logo --- #
