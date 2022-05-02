@@ -9,7 +9,7 @@
 *	The Estimator accepted a database logical query and estimated the total cost in terms of disk accesses
 *	The Optimizer optimised a given query by pushing down the Selects, creating Joins and adding Projects
 
-**HqOS: Threat Analysis** (February 2021) </br>
+**HqOS: Threat Analysis** (February 2021)
 Team size: 6
 *	The product’s website and whitepaper were analysed, the vulnerable Assets involved were highlighted
 *	Misuse cases and security cases were designed
