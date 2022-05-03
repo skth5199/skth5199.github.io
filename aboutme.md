@@ -1,10 +1,8 @@
 ---
 layout: page
 title: About me
-subtitle: Why you'd want to reach out to me.
+subtitle: Here is a little bit about me.
 ---
-
-Here is a little bit about me.
 - I am a technology enthusiast and will give you great tech and gadget recommendations
 - My interests are Deep Learning, Data Science and Software development
 - I love travelling and am always up for a fun trip
