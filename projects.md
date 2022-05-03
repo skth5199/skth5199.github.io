@@ -3,6 +3,12 @@ layout: page
 title: Projects
 ---
 
+**Fraud Detection using Graph Machine learning** (Jan 2022 – Feb 2022) ([github](https://github.com/skth5199/graph-based-fraud-detection))
+*	A large financial, which was the IEEE-CIS Fraud Detection Dataset provided by Vesta on Kaggle, was integrated, cleaned and analysed.
+*	A graph machine learning end-to-end solution was developed to detect fraud
+*	The dataset used was the IEEE-CIS Fraud Detection Dataset provided by Vesta on Kaggle
+*	Two Relational graph convolution networks were developed and compared.
+
 **Monocular Depth Estimation using Transfer Learning with focus on complex scenarios** (June 2021 – August 2021) ([github](https://github.com/skth5199/depth_gen))
 *	Concept of Transfer Learning was used to develop three monocular depth estimation approaches, as an alternative to the currently used expensive and limited LIDAR solutions. 
 *	Three solutions (namely the Pix2pix model, the U-net with DenseNet encoder and the U-net with MobileNetv2 encoder) were produced and experimentally compared
