@@ -4,12 +4,11 @@ title: About me
 subtitle: Why you'd want to reach out to me.
 ---
 
-My name is Srikanth.
-- I am a technology enthusiast
-- My interets are Deep Learning, Data Science and Software development
-- I love travelling
-- I take fitness very seriously
-- I am a great listener
+Here is a little bit about me.
+- I am a technology enthusiast and will give you great tech and gadget recommendations
+- My interests are Deep Learning, Data Science and Software development
+- I love travelling and am always up for a fun trip
+- I take my fitness very seriously
+- I am a great listener 
 - I love playing chess and tennis
-
-### My story
+- In my spare time I learn about fitness, cook healthy recipes and enjoy reading as well.
