@@ -4,7 +4,7 @@ title: Projects
 ---
 
 **Fraud Detection using Graph Machine learning** (Jan 2022 – Feb 2022) ([github](https://github.com/skth5199/graph-based-fraud-detection))
-*	A large financial, which was the IEEE-CIS Fraud Detection Dataset provided by Vesta on Kaggle, was integrated, cleaned and analysed.
+*	A large financial dataset, which was the [IEEE-CIS Fraud Detection Dataset](https://www.kaggle.com/c/ieee-fraud-detection) provided by Vesta, was integrated, cleaned and analysed.
 *	A graph machine learning end-to-end solution was developed to detect fraud
 *	The dataset used was the IEEE-CIS Fraud Detection Dataset provided by Vesta on Kaggle
 *	Two Relational graph convolution networks were developed and compared.
