@@ -29,7 +29,8 @@ This section describes the five algorithms in detail along with the justificatio
 ## Approach 1
 This is a conventional approach that follows the
 ‘go-to’ process for tweet classification.
-1) Preprocessing: The stopwords were to be
+### Preprocessing: 
+The stopwords were to be
 removed from the ‘tweetText’ field to prevent the
 models from being influenced by words that might
 not add much value to the meaning of the document
@@ -42,7 +43,9 @@ to be noted that lemmatization is preferred over
 stemming because the former is more powerful as
 it performs morphological analysis of words rather
 than merely cutting of the suffix [11].
-2) Feature extraction: The “Bag of n-grams”
+
+###  Feature extraction: 
+The “Bag of n-grams”
 representation was used for feature extraction
 as it is “simple to understand and implement
 and has seen great success in problems such as
@@ -57,8 +60,9 @@ using ‘TfidfTransformer’ library. TF-IDF is used
 to reduce the influence of tokens that occur very
 frequently giving them less generalization power
 and making them less informative.
-3) Feature selection and dimensionality
-reduction: Firstly, this approach focuses only
+
+###  Feature selection and dimensionality reduction: 
+Firstly, this approach focuses only
 of the classification of tweets. Hence only the
 Word vectors and the class label features shall
 be taken. To reduce the dimensionality, Chi
@@ -67,7 +71,9 @@ widely used test for statistical difference, was
 performed to determine if a particular feature
 and the class label were uniform. Features over
 the threshold were kept and the rest were discarded.
-4) Modelling: Multinomial NB was suitable for
+
+### Modelling: 
+Multinomial NB was suitable for
 this approach as it was specifically made for classification with discrete features. It used abundantly
 with word counts for text classification as both
 ”training and testing complexities are linear for
@@ -82,10 +88,18 @@ two-level classification model [3]. The working is
 portrayed in Fig. 4.
 ![image](https://user-images.githubusercontent.com/26760537/167206370-38e20f3b-1c23-4987-b27d-9a1cb578ba1c.png)
 
-1) Preprocessing: The stop words were removed from the tweets using nltk stop words list. Following this, the tweets were tokenized, parts of speech were tagged and lemmatization was performed similar to the first approach.
-2) Feature extraction: The tokens were then converted to feature vectors using the ‘TfidfVectorizer’ library. The ‘datetime’ python library was used to convert the given timestamps into Unix timestamps (number of seconds elapsed from 1970). This was done because this makes the timestamp into an ordinal attribute and hence can be directly fed to a model. The imageIDs were one hot encoded. One-hot encoding was chosen over merely assigning numbers as there is no preference order for the images. Thus, one hot encoding the images gives them equal weightage.
-3) Feature selection and dimensionality reduction: The userID, tweetId, processed timestamp, one-hot encoded imageId and tokens are selected. Dimensionality reduction is omitted in this approach as it is a two-level approach and requires every bit of data available. The inter-relations between the tweets might be lost if the dimensionality is reduced.
-4) Modelling: The TFIDF vectors will undergo clustering. The clustering algorithm used was Kmeans clustering and the distance measure was
+
+###  Preprocessing: 
+The stop words were removed from the tweets using nltk stop words list. Following this, the tweets were tokenized, parts of speech were tagged and lemmatization was performed similar to the first approach.
+
+###  Feature extraction: 
+The tokens were then converted to feature vectors using the ‘TfidfVectorizer’ library. The ‘datetime’ python library was used to convert the given timestamps into Unix timestamps (number of seconds elapsed from 1970). This was done because this makes the timestamp into an ordinal attribute and hence can be directly fed to a model. The imageIDs were one hot encoded. One-hot encoding was chosen over merely assigning numbers as there is no preference order for the images. Thus, one hot encoding the images gives them equal weightage.
+
+###  Feature selection and dimensionality reduction: 
+The userID, tweetId, processed timestamp, one-hot encoded imageId and tokens are selected. Dimensionality reduction is omitted in this approach as it is a two-level approach and requires every bit of data available. The inter-relations between the tweets might be lost if the dimensionality is reduced.
+
+###  Modelling:
+The TFIDF vectors will undergo clustering. The clustering algorithm used was Kmeans clustering and the distance measure was
 Jaccard’s distance as the order of words in the tweets
 was not considered. These choices were made as
 this combination was found to work well in similar
@@ -107,14 +121,22 @@ learning library was used for the SVM and random
 forest algorithms
 
 ## Approach 3
-1) Preprocessing: The tweets must first be normalized by matching patterns using regular expressions. This was done to “map syntactic, lexical and Twitter specific forms found in tweets to their normalized forms” [6]. Hashtags and mentions are Twitter specific forms, and the rest are lexical forms. These were stored as separate attributes. The tweets were then tokenized, and the stop words were removed like in approach 1. Moreover, there are just 379 unique ‘imageId’ values out of 14,468 rows. Hence, this attribute could greatly help with distinguishing power and consequently was included.
-2) Feature extraction and Selection: The text tokens, the engineered hashtags and mentions fields, imageId and the class labels were selected. The text tokens were transformed into their respective TF-IDF representations. The imageId, hashtags and mentions are one -hot encoded using the ‘sklearn’ one-hot encoder library. Dimensionality Reduction was not applied to the whole dataset to avoid loss of information implied by inter tweet relations via user mentions, hashtags and imageIds. However, PCA was used to reduce the dimensionality of only the TF-IDF representations of the tokens. This ensures low redundancy and correlation amongst features through orthogonal components that have a high differentiating potential [14].
-3) Modelling: A deep neural network is best suited for this approach as the number of features is comparatively larger than the other approaches. Deep Neural networks consist of a fair number of neurons. Each neuron is a powerful classifier and hence a deep network of them will do a stellar job with a larger number of features when compared to conventional Machine Learning algorithms [7]. The architecture included an embedding layer, a flatten layer and two dense layers with ReLU and Sigmoid activation functions respectively. ReLU, being comparatively newer, is known to give better results than other functions and Sigmoid is used in the output layer as it is perfect for binary classification. Dropout regularization was also used to avoid overfitting. Adam Optimizer, which almost always outperforms other optimizers [19], was used and binary cross entropy was used as the loss function. This architecture was chosen as it performed well in a similar problem [13].
+
+###  Preprocessing:
+The tweets must first be normalized by matching patterns using regular expressions. This was done to “map syntactic, lexical and Twitter specific forms found in tweets to their normalized forms” [6]. Hashtags and mentions are Twitter specific forms, and the rest are lexical forms. These were stored as separate attributes. The tweets were then tokenized, and the stop words were removed like in approach 1. Moreover, there are just 379 unique ‘imageId’ values out of 14,468 rows. Hence, this attribute could greatly help with distinguishing power and consequently was included.
+
+###  Feature extraction and Selection:
+The text tokens, the engineered hashtags and mentions fields, imageId and the class labels were selected. The text tokens were transformed into their respective TF-IDF representations. The imageId, hashtags and mentions are one -hot encoded using the ‘sklearn’ one-hot encoder library. Dimensionality Reduction was not applied to the whole dataset to avoid loss of information implied by inter tweet relations via user mentions, hashtags and imageIds. However, PCA was used to reduce the dimensionality of only the TF-IDF representations of the tokens. This ensures low redundancy and correlation amongst features through orthogonal components that have a high differentiating potential [14].
+
+###  Modelling:
+A deep neural network is best suited for this approach as the number of features is comparatively larger than the other approaches. Deep Neural networks consist of a fair number of neurons. Each neuron is a powerful classifier and hence a deep network of them will do a stellar job with a larger number of features when compared to conventional Machine Learning algorithms [7]. The architecture included an embedding layer, a flatten layer and two dense layers with ReLU and Sigmoid activation functions respectively. ReLU, being comparatively newer, is known to give better results than other functions and Sigmoid is used in the output layer as it is perfect for binary classification. Dropout regularization was also used to avoid overfitting. Adam Optimizer, which almost always outperforms other optimizers [19], was used and binary cross entropy was used as the loss function. This architecture was chosen as it performed well in a similar problem [13].
 
 ## Approach 4
 This approach classifies tweets using a Recurrent
 neural network (LSTM)
-1) Preprocessing: Special characters were
+
+###  Preprocessing:
+Special characters were
 removed and then the words were tokenized by
 converting each sequence into an integer encoded
 representation and normalizing the length of the
@@ -125,7 +147,9 @@ no stopword removal and TF-IDF is not used as
 the LSTM takes the order of the words in tweets.
 Hence the preprocessing is more superficial when
 compared to other approaches.
-2) Feature extraction and Selection: The
+
+###  Feature extraction and Selection:
+The
 tokenized tweets and the label column were
 considered. Transfer Learning was used for
 feature extraction. Glove embeddings and twitter
@@ -135,7 +159,9 @@ Both the embeddings were stacked together using
 ‘numpy.hstack’ method. The stacking demonstrated
 better performance than using any one of the
 embeddings or training them from scratch [8].
-3) Modelling: A bi-directional LSTM neural network was used for modelling for better contextual
+
+###  Modelling:
+A bi-directional LSTM neural network was used for modelling for better contextual
 learning. The network starts off with an Embedding
 layer which was followed by dropout regularization.
 Dropout was used instead of L2 regularization as it
@@ -180,8 +206,12 @@ to give a good result. Note that each approach is
 made to focus on a vital aspect and hence, they are
 all equally important. Hence voting is apposite to
 this scenario.
-1) Preprocessing, Feature extraction, Feature selection and Dimensionality reduction: The four approaches stated in A,B,C and D were used as sub models of this ensemble model. The overview is portrayed in Fig. 5.
-2) Modelling: The predictions from all 4 models
+
+###  Preprocessing, Feature extraction, Feature selection and Dimensionality reduction:
+The four approaches stated in A,B,C and D were used as sub models of this ensemble model. The overview is portrayed in Fig. 5.
+
+###  Modelling:
+The predictions from all 4 models
 were evaluated and the outcomes were recorded.
 The class with the maximum number of votes was
 taken as the outcome. Since there are four sub
