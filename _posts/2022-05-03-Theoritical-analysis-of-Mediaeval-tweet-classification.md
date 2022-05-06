@@ -245,11 +245,7 @@ to give a good result. Note that each approach is
 made to focus on a vital aspect and hence, they are
 all equally important. Hence voting is apposite to
 this scenario.
-1) Preprocessing, Feature extraction, Feature
-selection and Dimensionality reduction: The four
-approaches stated in A,B,C and D were used as
-sub models of this ensemble model. The overview
-is portrayed in Fig. 5.
+1) Preprocessing, Feature extraction, Feature selection and Dimensionality reduction: The four approaches stated in A,B,C and D were used as sub models of this ensemble model. The overview is portrayed in Fig. 5.
 2) Modelling: The predictions from all 4 models
 were evaluated and the outcomes were recorded.
 The class with the maximum number of votes was
@@ -262,6 +258,8 @@ value. This is due to the fact that the approaches in
 always outperform the machine learning approaches
 in the former two approaches and hence act as the
 tie breakers.
+![image](https://user-images.githubusercontent.com/26760537/167206101-c0ae6d8a-0e96-44cb-9d18-895584fdd53b.png)
+
 
 # Evaluation
 ## Strengths and Weakness analysis of the approaches
