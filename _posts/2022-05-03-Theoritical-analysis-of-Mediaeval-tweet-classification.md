@@ -86,6 +86,8 @@ used
 The second approach is based on a unique
 two-level classification model [3]. The working is
 portrayed in Fig. 4.
+
+
 ![image](https://user-images.githubusercontent.com/26760537/167206370-38e20f3b-1c23-4987-b27d-9a1cb578ba1c.png)
 
 
