@@ -263,4 +263,269 @@ always outperform the machine learning approaches
 in the former two approaches and hence act as the
 tie breakers.
 
+# Evaluation
+## Strengths and Weakness analysis of the approaches
+### Approach 1
+a) Strengths
+i) The approach does not require heavy
+processing power. Performing Chisquared test further takes this down
+by removing features with high correlation.
+ii) Lemmatization gets the root word
+through morphological analysis. This
+results uniform word vector representations with less noise.
+iii) Multinomial NB and SVM are
+known to be perfect for text tokens
+classification in the literature [15].
+b) Weaknesses
+i) Technique does not preserve the order of the words.
+ii) TF-IDF model is based on the bagof-words model and hence does not
+capture the position in text, semantics, and co-occurrences amongst
+documents. Therefore, TF-IDF is
+only useful as a lexical level feature
+[21].
+iii) An ensemble of the two models
+could further boost performance.
 
+### Approach 2
+a) Strengths
+i) The two-level approach takes into
+account the inter tweet relations.
+ii) Attributes other than just the tweets
+(userID, tweetId, timestamp, imageId) were considered resulting in
+better performance on data that are
+structurally similar to that in the
+dataset.
+iii) Clustering the tweets based on topic
+helps uncover unique patterns in the
+data that none of the other approaches consider.
+b) Weaknesses
+i) Determining the perfect number of
+clusters is difficult.
+ii) Two models without any dimensionality reduction demands powerful
+hardware.
+iii) The performance of the second
+model could be severely affected if
+the performance of the first level is
+not up to the mark
+
+### Approach 3
+a) Strengths
+i) Considers mentions and hashtags as
+separate attributes to uncover patterns that are unique to this approach.
+ii) Hyperparameter tuning performed
+resulting in a near perfect model.
+iii) Deep neural network used and hence
+higher accuracy than other machine
+learning functions is highly probable.
+b) Weaknesses
+i) High number of features might make
+this approach susceptible to the curse
+of dimensionality.
+ii) The amount of data might not be sufficient for the neural network training
+iii) Does not consider the order of the
+words
+
+### Approach 4
+a) Strengths
+i) Word context is considered by the
+LSTM network.
+ii) LSTM neural network with hyperparameter tuning guarantees great performance.
+iii) Regularization is performed to avoid
+overfitting.
+b) Weaknesses
+i) Being a deep learning approach, it is
+computationally intensive.
+ii) The dataset size might not be enough
+for ideal results and the tweets might
+be very small for the LSTM to draw
+meaningful patterns from the order
+of words.
+iii) Convolutions stacked on top of each
+state vector in the LSTM might end
+up hurting the performance
+
+### Approach 5
+a) Strengths
+i) Being an ensemble approach, the
+best performance is highly likely.
+ii) Uses sub models that focus on different aspects guaranteeing greater
+depth in predictions.
+iii) Equal voting is used to make the final classification consequently giving
+equal weightage to all the models.
+b) Weaknesses
+i) Very heavy to train. Four full-fledged
+models are used and hence even
+the classification might not be quick
+enough for real-time usage.
+ii) The computational cost might not be
+worth the boost in performance.
+iii) The performance of the approach
+could drastically plummet if the data
+size is not sufficient for the deep
+learning models because they act as
+the tiebreakers.
+
+## Ranking
+The outcome of this ranking is to pick the
+approach that is best potential approach for the
+task at hand. Two main factors shall be considered
+while ranking the approaches, namely speed and
+correctness. Tweet classification is a task that needs
+real time results due to the plethora of tweets every
+second and the intention to quickly pick-up current
+affairs information that is not fake. Correctness is
+considered because the whole idea of classifying
+tweets to gather information for decision making is
+voided when a majority of tweets are misclassified.
+The best approach for the problem at hand is
+approach 3. It uses a deep neural network that is
+known to outperform machine learning algorithms
+almost always, given enough data. Even though the
+training process is computationally intensive, the
+classification process does not take much longer that
+the other approaches. Moreover, Hyperparameter
+tuning ensures that there is no overfitting despite
+the high dimensionality. Ergo, this approach strikes
+the right balance between accuracy and speed and
+is ranked 1.
+The next approach is the approach 4 as it uses an
+LSTM network and has the potential of getting excellent results when compared to machine learning
+approaches [9]. The sole reason for this approach
+not being ranked first is that it does not consider any
+other attributes other than the ‘tweettext’. Hence it
+should perform better in more generalized situations
+where only the tweet text is to be classified. This
+approach cannot be guaranteed to outperform approach 3 on the media eval 2015 dataset and hence
+is ranked lower.
+Furthermore, approach 5 is ranked third. Despite the
+fact that this approach is the most computationally
+intensive, it can almost be guaranteed that this
+approach will supersede the other models as it is
+an amalgamation of all those models. Therefore, this
+approach is perfect for situations where the accuracy
+cannot be compromised.
+Approach 2 is ranked 4. This is due to the reliability
+of concept of the two-level classification. In the off
+chance that the first level model performs poorly, it
+can severely affect the performance of the second
+model. Additionally, the model could be slower due
+to having two sub models and consequently needing
+2 runs. Despite these draw backs, this model has the
+potential to outperform the higher ranked models if
+implemented thoroughly.
+Finally, Approach 1 is ranked fifth. The main advantage of this approach is that it is the fastest of the
+bunch, but it does not consider any other attributes
+other than the ‘tweet text’. The order of the words is
+also not preserved. Hence, for low budget projects
+with very dirty and non-uniform data from which
+only the tweet text is a usable attribute, this method
+will fit in perfectly. But due to these limitations,
+high performance cannot be guaranteed for this
+approach.
+With respect to the wider literature, these are the
+best algorithms when it comes to tweet classification
+based only on the given Mediaeval 2015 dataset
+without images. But, in the case of Mediaeval and
+tweet classification in general, these approaches fall
+short as they dont consider images. A few approaches such as the work by Christina Boididou et
+al. supersede these approaches. Christina Boididou
+et al. take into account forensic image data for more
+effective classification [22].
+
+# Conclusion
+Five potential analogous approaches were discussed in this work. The preprocessing, feature extraction, feature selection and modelling steps were
+described in detail. The justification for the design
+choices was provided along with the approaches.
+The strengths and pitfalls of all the approaches were
+discussed and the approaches were ranked bases
+on speed and correctness. The final order of the
+approached in decreasing order was hypothesized
+to be: Approach 3 > Approach 4 > Approach 5 >
+Approach 2 > Approach 1. A few key takeaways are
+that the Deep Learning approaches will supersede
+the machine learning algorithms with sufficient data
+and enough computational power. Regularization,
+feature selection and dimensionality reduction are
+to be carefully used to reduce overfitting and make
+the models efficient, while keeping loss of data in
+mind. Hyperparameter tuning must be performed
+wherever possible to make the models appropriate
+for the current scenario. The order of the tweets can
+help uncover important information even though it
+is often neglected in terms of tweets due to their
+small size.
+Despite the thorough analysis and the inclusion of
+five complete approaches, there are a few things
+were omitted and must be resolved in the future.
+The images have not been considered and evaluated. Adding another level of image classification
+along with this can give rise to more interesting
+approaches and can significantly boost accuracy.
+Cross-Validation must be performed and the F1
+scores along with the time taken by the approaches
+must be experimentally determined and be considered for the ranking
+
+# References
+1. IT Pro team: ’How to measure data quality’, 2 Mar
+2020,https://www.itpro.co.uk/business-intelligence-bi/29773/howto-measure-data-quality
+2. C.D. Manning, P. Raghavan and H. Schuetze
+(2008). Introduction to Information Retrieval. Cambridge
+University Press, pp. 234-265. https://nlp.stanford.edu/IRbook/html/htmledition/naive-bayes-text-classification-1.html
+3. Zhiwei Jin, Juan Cao, Yazi Zhang, and Zhang Yongdong. 2015.
+MCG-ICT at MediaEval 2015: Verifying Multimedia Use with a
+Two-Level Classification Model Proceedings of the MediaEval
+2015 Multimedia Benchmark Workshop.
+4. Tripathy, R.M. , Sharma, S. , Joshi, S. , Mehta, S. and Bagchi,
+A. (2014), “Theme based clustering of tweets”, Proceedings
+of the 1st IKDD Conference on Data Sciences, ACM, March,
+pp. 1-5.
+5. ’Jaccard index’, Wikipedia:
+https://en.wikipedia.org/wiki/Jaccard index
+6. Nicolas Foucault and Antoine Courtin. 2016. Automatic
+Classification of Tweets for Analyzing Communication Behavior
+of Museums. In Proceedings of the Tenth International Conference
+on Language Resources and Evaluation (LREC 2016), Nicoletta
+Calzolari (Conference Chair), Khalid Choukri, Thierry Declerck,
+Sara Goggi, Marko Grobelnik, Bente Maegaard, Joseph Mariani,
+Helene Mazo, Asuncion Moreno, Jan Odijk, and Stelios Piperidis
+(Eds.). European Language Resources Association (ELRA),
+Paris, France
+7. Faizan Shaikh, ’Deep Learning vs. Machine
+Learning – the essential differences you need to
+know!’, https://www.analyticsvidhya.com/blog/2017/04/comparisonbetween-deep-learning-machine-learning
+8. Deep Learning(LSTM) for Tweet Classification:
+www.kaggle.com/mkowoods/deep-learning-lstm-for-tweetclassification
+9. Sahoo A.K., Pradhan C., Das H. (2020) Performance Evaluation
+of Different Machine Learning Methods and Deep-Learning Based
+Convolutional Neural Network for Health Decision Making. In:
+Rout M., Rout J., Das H. (eds) Nature Inspired Computing for
+Data Science. Studies in Computational Intelligence, vol 871.
+Springer, Cham. https://doi.org/10.1007/978-3-030-33820-6 8
+10. Shubham Singh, ”NLP Essentials: Removing Stopwords
+and Performing Text Normalization using NLTK and spaCy in
+Python”, https://www.analyticsvidhya.com/blog/2019/08/how-toremove-stopwords-text-normalization-nltk-spacy-gensim-python/
+11. Hafsa Jabeen, ”Stemming and Lemmatization in Python”,
+https://www.datacamp.com/community/tutorials/stemminglemmatization-python
+12. Jason Brownlee, ”A Gentle Introduction to the Bag-of-Words
+Model”, https://machinelearningmastery.com/gentle-introductionbag-words-model/
+13. Nikolai Janakiev, ”Practical Text Classification With
+Python and Keras”, https://realpython.com/python-keras-textclassification/
+14. ”Principal Component Analysis”, International Encyclopedia
+of Education (Third Edition), 2010
+15. ”Choosing what kind of classifier to use”,
+https://nlp.stanford.edu/IR-book/html/htmledition/choosingwhat-kind-of-classifier-to-use-1.html
+16. Monkey Learn, ”Text Classification”,
+https://monkeylearn.com/text-classification/
+17. Great Learning Team, ”Random Forest Algorithm- An
+Overview”, https://www.mygreatlearning.com/blog/randomforest-algorithm/
+18. Julia Kho, ”Why Random Forest is My Favorite Machine
+Learning Model”, https://towardsdatascience.com/why-randomforest-is-my-favorite-machine-learning-model-b97651fa3706
+19. Sanket Doshi, ”Various Optimization Algorithms For Training
+Neural Network”, https://towardsdatascience.com/optimizers-fortraining-neural-network-59450d71caf
+20. Karsten Eckhardt, ”Choosing the right Hyperparameters for a simple LSTM using Keras”,
+https://towardsdatascience.com/choosing-the-righthyperparameters-for-a-simple-lstm-using-keras-f8e9ed76f046
+21. Prasoon Singh, ”Fundamentals of Bag Of Words and
+TF-IDF”, https://medium.com/analytics-vidhya/fundamentals-ofbag-of-words-and-tf-idf-9846d301ff22
+22. Christina Boididou, Katerina Andreadou, Symeon
+Papadopoulos, Duc-Tien Dang-Nguyen, Giulia Boato, Michael
+Riegler, Yiannis Kompatsiaris, et almbox.. 2015. Verifying
+Multimedia Use at MediaEval 2015.. In MediaEval
