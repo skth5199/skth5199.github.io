@@ -1,14 +1,15 @@
 ---
 layout: post
 title: Tweet Classification on the MediaEval Benchmarking Initiative for Multimedia Evaluation Data
-subtitle: A Critical Analysis of five approaches
-cover-img: /assets/img/path.jpg
+subtitle: This critical analysis is my attempt at theorizing a solution for a problem in a situation where the complete dataset is not available yet. This work can be used as an example to generate similar theoretical proposals, which can be beneficial in the early stages of data consulting or research projects, where confidentiality has not yet been established.
+cover-img: /assets/img/twitter_article_cover.jpg
 thumbnail-img: /assets/img/thumb.png
-share-img: /assets/img/path.jpg
+share-img: /assets/img/twitter_article_cover.jpg
 tags: [Deep Learning, Data Science]
 ---
 
 # Introduction and Data analysis
+
 ## Problem Description
 The task at hand was to build binary classification models based on the given dichotomy of tweets that are categorized into ‘real’ and ‘fake’. Five complete approaches to achieve this are discussed and critically analyzed. Their strengths and weaknesses are compared, and the approaches are ranked based on this analysis. The dataset provided was The MediaEval 2015 ”verifying multimedia use” dataset which consisted of social media posts for which the social media identifiers were shared along with the tweet text and some additional characteristics of the post.
 
