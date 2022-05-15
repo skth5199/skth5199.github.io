@@ -1,12 +1,14 @@
 ---
 layout: post
 title: Tweet Classification on the MediaEval Benchmarking Initiative for Multimedia Evaluation Data
-subtitle: This critical analysis is my attempt at theorizing a solution for a problem in a situation where the complete dataset is not available yet. This work can be used as an example to generate similar theoretical proposals, which can be beneficial in the early stages of data consulting or research projects, where confidentiality has not yet been established.
+subtitle: A theoritic critical analysis of prospective approaches
 cover-img: /assets/img/twitter_article_cover.jpg
 thumbnail-img: /assets/img/thumb.png
 share-img: /assets/img/twitter_article_cover.jpg
 tags: [Deep Learning, Data Science]
 ---
+
+This analysis is my attempt at theorizing a solution for a problem in a situation where the complete dataset is not available yet. This work can be used as an example to generate similar theoretical proposals, which can be beneficial in the early stages of data consulting or research projects, where confidentiality has not yet been established.
 
 # Introduction and Data analysis
 
