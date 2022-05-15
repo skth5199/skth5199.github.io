@@ -3,7 +3,7 @@ layout: post
 title: Tweet Classification on the MediaEval Benchmarking Initiative for Multimedia Evaluation Data
 subtitle: A theoritic critical analysis of prospective approaches
 cover-img: /assets/img/twitter_article_cover.jpg
-thumbnail-img: /assets/img/thumb.png
+thumbnail-img: /assets/img/twit_thumb.png
 share-img: /assets/img/twitter_article_cover.jpg
 tags: [Deep Learning, Data Science]
 ---
