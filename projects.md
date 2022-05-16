@@ -20,7 +20,12 @@ title: Projects
 *	The Estimator accepted a database logical query and estimated the total cost in terms of disk accesses
 *	The Optimizer optimised a given query by pushing down the Selects, creating Joins and adding Projects
 
-**HR Analytics** (March 2021) ([github](https://github.com/skth5199/HR-Analytics))
+**Food and Nutrition Analytics** (April 2022) ([blog](https://skth5199.github.io/2022-05-15-Diet-Analytics)) ([github](https://github.com/skth5199/HR-Analytics))
+*	Diet and nutrition data was analysed and visualized to derive insights
+*	Dataset used was originally obtained from MyFitnessPal.
+*	The insights were derived to aid supermarkets in better stocking of goods and to understand the diet trends and eating habits of users.
+
+**HR Analytics** (March 2020) ([github](https://github.com/skth5199/HR-Analytics))
 *	HR dataset was analysed using R to predict if an employee would be promoted
 *	Dataset used was the [HR Analysis Case Study Dataset](https://github.com/skth5199/HR-Analytics)
 *	The data was cleaned, analysed and visualized.
