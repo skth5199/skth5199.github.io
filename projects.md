@@ -43,7 +43,7 @@ _Team size: 6_
 
 **HackMan**	(February 2019 – April 2019) ([github](https://github.com/skth5199/HackMan))
 _Team size: 3_
-* A Hackathon Management System made to aid in better organization of hackathons.
+* A Hackathon Management System made to aid in better organization of hackathons
 * This website was built using Python and the Django web framework
 * It featured a participant dashboard, a judge dashboard and a cafeteria dashboard
 
@@ -55,9 +55,16 @@ _Team size: 2_
 
 **Constructoo**	(March 2021 – April 2021) ([github](https://github.com/skth5199/constructoo))
 _Team size: 3_
-* Constructoo is an Android application for construction deliveries.
+* Constructoo is an Android application for construction deliveries
 * It assists the managers in a company by controlling the packages, determining the construction sites, and assigning the specified driver for this shipment
 * Functional requirements and architecture can be found in the github repo
+
+**Zoo Management System**	(January 2018 – March 2018) ([github](https://github.com/skth5199/zms))
+_Team size: 5_
+*	A Zoo Management Application built to aid in effective and efficient management of animals in the zoo
+*	The application was built using Java Applets and the backend was made using MySQL
+*	Separate portals for Manager, Staff, Head of zoo and the Vet were developed
+
 
 **HqOS: Threat Analysis** (February 2021)
 _Team size: 6_
