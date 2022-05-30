@@ -9,4 +9,4 @@ subtitle: Here is a little bit about me.
 - I take my fitness very seriously and will give you good fitness and nutrition tips
 - I am a great listener.
 - I love playing chess and tennis.
-- In my spare time I learn about fitness, cook healthy recipes and enjoy reading as well.
+- In my spare time I learn about fitness, cook healthy recipes and enjoy reading (JK I watch Netflix xD).
