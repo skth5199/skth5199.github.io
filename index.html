@@ -1,0 +1,1297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!--
+    =====================================================================
+    PORTFOLIO SITE — skth5199.github.io
+    =====================================================================
+    Structure:
+      /index.html          — this file (fully self-contained)
+      /blogs/              — folder for blog post HTML files
+        2026-04-07-risk-engine.html
+        2022-05-03-tweet-classification.html
+        2022-05-15-diet-analytics.html
+
+    Blog HTML files must be generated from the markdown posts.
+    Each blog HTML should include its own <head> with styles and a
+    back-link to the main site.
+    =====================================================================
+    -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Srivenkata Srikanth | VP Quant Finance | Python · Risk Systems · Market Risk</title>
+    <meta name="description" content="Srivenkata Srikanth — Vice President, Quantitative Finance at Bank of America. Python risk systems engineer specialising in cross-asset market risk, fixed income, FX, and equities. MSc Computer Science (Distinction), University of Southampton.">
+    <meta name="keywords" content="quant developer, quantitative finance, python, risk systems, market risk, fixed income, FX, equities, Bank of America, portfolio">
+    <meta name="author" content="Srivenkata Srikanth">
+    <meta property="og:title" content="Srivenkata Srikanth | VP Quant Finance">
+    <meta property="og:description" content="I build risk systems that price 40,000 positions before the Asian open. VP at Bank of America — Python, Risk Systems, Market Risk.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://skth5199.github.io">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #0a0f1e;
+            --bg-secondary: #0d1b2a;
+            --bg-card: #111d2e;
+            --bg-card-hover: #152238;
+            --accent: #00bfff;
+            --accent-dim: #1e90ff;
+            --accent-glow: rgba(0, 191, 255, 0.15);
+            --text-primary: #f0f4f8;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --border: #1e293b;
+            --nav-height: 70px;
+            --max-width: 1200px;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        a {
+            color: var(--accent);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        a:hover {
+            color: var(--accent-dim);
+        }
+
+        .container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* NAV */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: var(--nav-height);
+            background: rgba(10, 15, 30, 0.92);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+        }
+
+        .nav .container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+        }
+
+        .nav-logo {
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: var(--text-primary);
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 28px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            font-size: 0.88rem;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--text-primary);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 22px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.25s;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: var(--bg-primary);
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-dim);
+            color: var(--bg-primary);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 20px rgba(0, 191, 255, 0.3);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--accent);
+            border: 1.5px solid var(--accent);
+        }
+
+        .btn-outline:hover {
+            background: var(--accent-glow);
+            transform: translateY(-1px);
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            padding: 4px;
+        }
+
+        .hamburger span {
+            width: 24px;
+            height: 2px;
+            background: var(--text-primary);
+            border-radius: 2px;
+            transition: all 0.3s;
+        }
+
+        /* HERO */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            padding-top: var(--nav-height);
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, #0a0f1e 0%, #0d1b2a 30%, #0f2744 60%, #0d1b2a 100%);
+            background-size: 400% 400%;
+            animation: heroGradient 15s ease infinite;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: 20%;
+            right: -10%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(0, 191, 255, 0.06) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        @keyframes heroGradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 780px;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 900;
+            letter-spacing: -1px;
+            margin-bottom: 12px;
+        }
+
+        .hero .subtitle {
+            font-size: clamp(1rem, 2vw, 1.25rem);
+            color: var(--accent);
+            font-weight: 500;
+            margin-bottom: 24px;
+        }
+
+        .hero .bio {
+            font-size: 1.05rem;
+            color: var(--text-secondary);
+            line-height: 1.75;
+            margin-bottom: 36px;
+            max-width: 650px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        /* SECTIONS */
+        section {
+            padding: 100px 0;
+        }
+
+        .section-header {
+            margin-bottom: 56px;
+        }
+
+        .section-header h2 {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 12px;
+        }
+
+        .section-header p {
+            color: var(--text-secondary);
+            font-size: 1.05rem;
+        }
+
+        .section-header .accent-line {
+            width: 48px;
+            height: 3px;
+            background: var(--accent);
+            border-radius: 2px;
+            margin-top: 16px;
+        }
+
+        /* FADE IN */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ABOUT */
+        .about-grid {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 60px;
+            align-items: start;
+        }
+
+        .avatar {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent), var(--accent-dim));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--bg-primary);
+            flex-shrink: 0;
+        }
+
+        .about-text {
+            color: var(--text-secondary);
+            font-size: 1.05rem;
+            line-height: 1.8;
+            margin-bottom: 28px;
+        }
+
+        .skills-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .skill-tag {
+            padding: 6px 14px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            font-size: 0.82rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            transition: all 0.2s;
+        }
+
+        .skill-tag:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .achievements-strip {
+            margin-top: 40px;
+            padding-top: 32px;
+            border-top: 1px solid var(--border);
+        }
+
+        .achievements-strip h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.8rem;
+        }
+
+        .achievements-list {
+            list-style: none;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .achievements-list li {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            padding-left: 18px;
+            position: relative;
+        }
+
+        .achievements-list li::before {
+            content: '▹';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+        }
+
+        /* EXPERIENCE */
+        .timeline {
+            position: relative;
+            padding-left: 32px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--border);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 48px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -37px;
+            top: 8px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--accent);
+            border: 3px solid var(--bg-primary);
+        }
+
+        .timeline-company {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .timeline-role {
+            font-size: 0.95rem;
+            color: var(--accent);
+            font-weight: 500;
+        }
+
+        .timeline-date {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+        }
+
+        .timeline-bullets {
+            list-style: none;
+        }
+
+        .timeline-bullets li {
+            font-size: 0.92rem;
+            color: var(--text-secondary);
+            padding-left: 18px;
+            position: relative;
+            margin-bottom: 8px;
+            line-height: 1.6;
+        }
+
+        .timeline-bullets li::before {
+            content: '–';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+        }
+
+        /* PROJECTS */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .project-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 28px;
+            transition: all 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-card:hover {
+            background: var(--bg-card-hover);
+            border-color: rgba(0, 191, 255, 0.3);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 30px rgba(0, 191, 255, 0.08);
+        }
+
+        .project-card h3 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .project-card .date {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+        }
+
+        .project-card p {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 16px;
+            flex: 1;
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 16px;
+        }
+
+        .project-tags span {
+            padding: 3px 10px;
+            background: rgba(0, 191, 255, 0.08);
+            border: 1px solid rgba(0, 191, 255, 0.2);
+            border-radius: 12px;
+            font-size: 0.72rem;
+            color: var(--accent);
+            font-weight: 500;
+        }
+
+        .project-card .btn {
+            padding: 8px 16px;
+            font-size: 0.82rem;
+            width: fit-content;
+        }
+
+        /* BLOG */
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .blog-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 28px;
+            transition: all 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .blog-card:hover {
+            background: var(--bg-card-hover);
+            border-color: rgba(0, 191, 255, 0.3);
+            transform: translateY(-4px);
+        }
+
+        .blog-card h3 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+
+        .blog-card .date {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+        }
+
+        .blog-card p {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 16px;
+            flex: 1;
+        }
+
+        .blog-card .btn {
+            padding: 8px 16px;
+            font-size: 0.82rem;
+            width: fit-content;
+        }
+
+        /* PUBLICATIONS */
+        .pub-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-bottom: 48px;
+        }
+
+        .pub-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 28px;
+            transition: all 0.3s;
+        }
+
+        .pub-card:hover {
+            border-color: rgba(0, 191, 255, 0.3);
+        }
+
+        .pub-card h3 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .pub-card p {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+        }
+
+        .certs {
+            border-top: 1px solid var(--border);
+            padding-top: 32px;
+        }
+
+        .certs h3 {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 16px;
+        }
+
+        .certs ul {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .certs li {
+            padding: 8px 16px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        /* AI AGENT */
+        .agent-section {
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .agent-card {
+            background: var(--bg-card);
+            border: 2px solid rgba(0, 191, 255, 0.3);
+            border-radius: 16px;
+            padding: 48px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .agent-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at center, rgba(0, 191, 255, 0.04) 0%, transparent 70%);
+        }
+
+        .agent-card > * {
+            position: relative;
+        }
+
+        .agent-card h2 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 16px;
+        }
+
+        .agent-card p {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            max-width: 600px;
+            margin: 0 auto 28px;
+            line-height: 1.7;
+        }
+
+        .agent-card .btn {
+            font-size: 1rem;
+            padding: 14px 32px;
+            margin-bottom: 32px;
+        }
+
+        .agent-iframe-wrapper {
+            margin-top: 24px;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+        }
+
+        .agent-iframe-wrapper iframe {
+            width: 100%;
+            height: 600px;
+            border: none;
+        }
+
+        /* FITNESS */
+        .fitness-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 60px;
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .fitness-card i {
+            font-size: 3rem;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+        }
+
+        .fitness-card h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .fitness-card p {
+            color: var(--text-secondary);
+            margin-bottom: 28px;
+            line-height: 1.7;
+        }
+
+        .btn-disabled {
+            background: var(--bg-card-hover);
+            color: var(--text-muted);
+            border: 1px solid var(--border);
+            cursor: not-allowed;
+        }
+
+        /* EDUCATION */
+        .edu-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        .edu-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 32px;
+        }
+
+        .edu-card h3 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .edu-card .degree {
+            font-size: 0.92rem;
+            color: var(--accent);
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+
+        .edu-card .distinction {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+        }
+
+        .edu-card p {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* CONTACT */
+        .contact-section {
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border);
+        }
+
+        .contact-content {
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .contact-audiences {
+            margin-bottom: 32px;
+        }
+
+        .contact-audiences p {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+
+        .contact-audiences strong {
+            color: var(--text-primary);
+        }
+
+        .contact-links {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            margin-bottom: 32px;
+            flex-wrap: wrap;
+        }
+
+        .contact-links a {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-secondary);
+            font-size: 0.92rem;
+            transition: color 0.2s;
+        }
+
+        .contact-links a:hover {
+            color: var(--accent);
+        }
+
+        /* FOOTER */
+        footer {
+            padding: 32px 0;
+            text-align: center;
+            border-top: 1px solid var(--border);
+            font-size: 0.82rem;
+            color: var(--text-muted);
+        }
+
+        /* MOBILE */
+        @media (max-width: 1024px) {
+            .projects-grid, .blog-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: fixed;
+                top: var(--nav-height);
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: rgba(10, 15, 30, 0.98);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 32px;
+            }
+
+            .nav-links.open {
+                display: flex;
+            }
+
+            .nav-links a {
+                font-size: 1.1rem;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .about-grid {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .avatar {
+                margin: 0 auto;
+            }
+
+            .skills-grid {
+                justify-content: center;
+            }
+
+            .achievements-list {
+                grid-template-columns: 1fr;
+            }
+
+            .projects-grid, .blog-grid, .pub-grid, .edu-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+
+            section {
+                padding: 72px 0;
+            }
+
+            .agent-card {
+                padding: 32px 20px;
+            }
+
+            .fitness-card {
+                padding: 40px 24px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-buttons {
+                flex-direction: column;
+            }
+
+            .hero-buttons .btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .contact-links {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAV -->
+    <nav class="nav">
+        <div class="container">
+            <a href="#" class="nav-logo">Sri.</a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#about">About</a></li>
+                <li><a href="#experience">Experience</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#blog">Blog</a></li>
+                <li><a href="#publications">Publications</a></li>
+                <li><a href="#agent">AI Agent</a></li>
+                <li><a href="#education">Education</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li><a href="https://topmate.io/s_srikanth" target="_blank" class="btn btn-primary">Book a Call</a></li>
+            </ul>
+            <div class="hamburger" id="hamburger" onclick="toggleNav()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero" id="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Srivenkata Srikanth</h1>
+                <p class="subtitle">VP Quant Finance @ Bank of America | Python · Risk Systems · Market Risk</p>
+                <p class="bio">I build risk systems that price 40,000 positions before the Asian open. Currently VP at Bank of America, I've spent 4 years automating cross-asset market risk — Fixed Income, FX, Equities — saving hundreds of engineering hours per quarter. I also write and mentor on breaking into quant development.</p>
+                <div class="hero-buttons">
+                    <a href="https://topmate.io/s_srikanth" target="_blank" class="btn btn-primary"><i class="fa-solid fa-calendar-check"></i> Book a Call</a>
+                    <a href="#projects" class="btn btn-outline"><i class="fa-solid fa-code"></i> View My Work</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about">
+        <div class="container">
+            <div class="section-header fade-in">
+                <h2>About</h2>
+                <div class="accent-line"></div>
+            </div>
+            <div class="about-grid fade-in">
+                <div class="avatar">SS</div>
+                <div>
+                    <p class="about-text">Quant Developer with a background spanning EU-funded fintech research, fraud detection, and production risk systems at a global investment bank. MSc Computer Science (Distinction), University of Southampton. Passionate about Python performance engineering, clean architecture, and the intersection of ML and finance.</p>
+                    <div class="skills-grid">
+                        <span class="skill-tag">Python</span>
+                        <span class="skill-tag">NumPy</span>
+                        <span class="skill-tag">Pandas</span>
+                        <span class="skill-tag">SQL</span>
+                        <span class="skill-tag">REST APIs</span>
+                        <span class="skill-tag">ZeroMQ</span>
+                        <span class="skill-tag">FastAPI</span>
+                        <span class="skill-tag">Redis</span>
+                        <span class="skill-tag">Market Risk</span>
+                        <span class="skill-tag">Fixed Income</span>
+                        <span class="skill-tag">FX</span>
+                        <span class="skill-tag">Equities</span>
+                        <span class="skill-tag">Deep Learning</span>
+                        <span class="skill-tag">Machine Learning</span>
+                        <span class="skill-tag">Graph ML</span>
+                        <span class="skill-tag">Docker</span>
+                        <span class="skill-tag">Spring Boot</span>
+                        <span class="skill-tag">MySQL</span>
+                    </div>
+                    <div class="achievements-strip">
+                        <h3>Achievements</h3>
+                        <ul class="achievements-list">
+                            <li>Amrita University Scholarship holder (50% fee waiver)</li>
+                            <li>IELTS Band 8</li>
+                            <li>1st place, SLAC Hackathon by Honeywell</li>
+                            <li>Top 3% India, Nullcon Hackim CTF</li>
+                            <li>Co-Founder, bi0s-Bangalore Cybersecurity Club</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- EXPERIENCE -->
+    <section id="experience" style="background: var(--bg-secondary);">
+        <div class="container">
+            <div class="section-header fade-in">
+                <h2>Experience</h2>
+                <div class="accent-line"></div>
+            </div>
+            <div class="timeline fade-in">
+                <div class="timeline-item">
+                    <div class="timeline-company">Bank of America Merrill Lynch</div>
+                    <div class="timeline-role">Vice President – Quantitative Finance Analyst</div>
+                    <div class="timeline-date">January 2026 – Present</div>
+                    <ul class="timeline-bullets">
+                        <li>Expanded scope and leadership responsibility across cross-asset risk systems</li>
+                    </ul>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-role">Assistant Vice President – Quantitative Finance Analyst</div>
+                    <div class="timeline-date">May 2024 – January 2026</div>
+                    <ul class="timeline-bullets">
+                        <li>Drove Operational Risk Remediation, leveraging Python to automate and scale cross-asset Market Risk applications supporting Fixed Income, FX, and Equities</li>
+                        <li>Re-engineered model binding infrastructure across 300+ risk components used in Rates and other asset-class risk models, enhancing maintainability, traceability, and execution stability</li>
+                        <li>Automated the ingestion of 500+ input sources via REST APIs, reducing manual processing by 80 hours per quarter and strengthening control processes</li>
+                        <li>Led automation of 40+ periodic reports saving over 150 hours per quarter</li>
+                        <li>Delivered full-stack enhancements, UI migrations, and process optimisations to support stable execution of risk analytics systems used globally</li>
+                    </ul>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-role">Junior Quantitative Developer – Global Market Risk</div>
+                    <div class="timeline-date">August 2022 – May 2024</div>
+                    <ul class="timeline-bullets">
+                        <li>Contributed to operational risk remediation by identifying inefficiencies and implementing automation across key risk workflows supporting cross-asset portfolios</li>
+                        <li>Delivered risk model changes in close partnership with quantitative analysts and stakeholders</li>
+                        <li>Automated a key quarterly risk calculation, saving model owners one week every quarter and ~£13,000 per quarter</li>
+                    </ul>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-company">University of Reading</div>
+                    <div class="timeline-role">Research Assistant (AI Software Engineering & Data Science)</div>
+                    <div class="timeline-date">September 2021 – August 2022</div>
+                    <ul class="timeline-bullets">
+                        <li>Undertook the Critical Chains Fintech Research project — a multi-million-pound EU project</li>
+                        <li>Spearheaded 12 stakeholders including EY and Netas in the final data analysis and modelling phase</li>
+                        <li>Developed fraud detection models using ML; engineered Deep Learning and Graph-based Algorithms boosting performance by 3%</li>
+                        <li>Feature engineering and importance techniques sped up training by 50%</li>
+                    </ul>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-company">Tata Communications LTD, Bangalore</div>
+                    <div class="timeline-role">Project Intern</div>
+                    <div class="timeline-date">June 2019 – July 2019</div>
+                    <ul class="timeline-bullets">
+                        <li>Developed and containerised a User Management Application and a chat app</li>
+                        <li>Skills: MySQL, Docker, Spring Boot</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects">
+        <div class="container">
+            <div class="section-header fade-in">
+                <h2>Projects</h2>
+                <div class="accent-line"></div>
+            </div>
+            <div class="projects-grid fade-in">
+                <div class="project-card">
+                    <h3>Backonaut – Lightweight Backtesting Engine</h3>
+                    <div class="date">May 2025</div>
+                    <p>Designed extensible OOP components for Strategy, DataFeed, Portfolio, and Execution. Integrated Yahoo Finance API for live historical data. Built custom strategy classes and automated PDF reporting.</p>
+                    <div class="project-tags">
+                        <span>Python</span><span>OOP</span><span>yfinance</span><span>Backtesting</span><span>Finance</span>
+                    </div>
+                    <a href="https://github.com/skth5199" target="_blank" class="btn btn-outline"><i class="fa-brands fa-github"></i> GitHub</a>
+                </div>
+                <div class="project-card">
+                    <h3>Monocular Depth Estimation via Transfer Learning</h3>
+                    <div class="date">June – August 2021</div>
+                    <p>Developed three depth estimation approaches as an alternative to expensive LIDAR (saving car owners $1000+). Compared Pix2pix, U-Net with DenseNet, and U-Net with MobileNetV2.</p>
+                    <div class="project-tags">
+                        <span>Deep Learning</span><span>Transfer Learning</span><span>Computer Vision</span><span>PyTorch</span>
+                    </div>
+                    <a href="https://github.com/skth5199" target="_blank" class="btn btn-outline"><i class="fa-brands fa-github"></i> GitHub</a>
+                </div>
+                <div class="project-card">
+                    <h3>Food & Nutrition Analytics</h3>
+                    <div class="date">April 2022</div>
+                    <p>Analysed 587K days of MyFitnessPal data across 9,900 users. Derived insights to aid supermarkets in stocking — potentially reducing 10,000+ tonnes of food waste.</p>
+                    <div class="project-tags">
+                        <span>Python</span><span>Data Analysis</span><span>Visualisation</span><span>Pandas</span>
+                    </div>
+                    <a href="https://github.com/skth5199" target="_blank" class="btn btn-outline"><i class="fa-brands fa-github"></i> GitHub</a>
+                </div>
+                <div class="project-card">
+                    <h3>Fraud Detection using Graph Machine Learning</h3>
+                    <div class="date">January 2022</div>
+                    <p>End-to-end Graph ML solution to detect fraud on a large financial dataset by Vesta. Leveraged graph-based representations for transaction network analysis.</p>
+                    <div class="project-tags">
+                        <span>Graph ML</span><span>Deep Learning</span><span>Python</span><span>Finance</span>
+                    </div>
+                    <a href="https://github.com/skth5199" target="_blank" class="btn btn-outline"><i class="fa-brands fa-github"></i> GitHub</a>
+                </div>
+                <div class="project-card">
+                    <h3>Query Optimizer</h3>
+                    <div class="date">March 2021</div>
+                    <p>Built a query optimiser and estimator for SJDB (designed by Dr Nicholas Gibbins). Implemented cost-based optimisation strategies for relational queries.</p>
+                    <div class="project-tags">
+                        <span>SQL</span><span>Databases</span><span>Query Optimisation</span>
+                    </div>
+                    <a href="https://github.com/skth5199" target="_blank" class="btn btn-outline"><i class="fa-brands fa-github"></i> GitHub</a>
+                </div>
+                <div class="project-card">
+                    <h3>Tweet Classification – MediaEval Benchmarking</h3>
+                    <div class="date">January 2021</div>
+                    <p>Theorised and critically analysed five NLP classification solutions for real/fake tweet detection on the MediaEval 2015 dataset.</p>
+                    <div class="project-tags">
+                        <span>NLP</span><span>Deep Learning</span><span>Machine Learning</span><span>Text Classification</span>
+                    </div>
+                    <a href="https://github.com/skth5199" target="_blank" class="btn btn-outline"><i class="fa-brands fa-github"></i> GitHub</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- BLOG -->
+    <section id="blog" style="background: var(--bg-secondary);">
+        <div class="container">
+            <div class="section-header fade-in">
+                <h2>Blog</h2>
+                <div class="accent-line"></div>
+            </div>
+            <div class="blog-grid fade-in">
+                <div class="blog-card">
+                    <h3>Building a Real-Time Risk Engine in Pure Python</h3>
+                    <div class="date">April 7, 2026</div>
+                    <div class="project-tags">
+                        <span>Quant Dev</span><span>Risk Engineering</span><span>Python</span>
+                    </div>
+                    <p>A frank account of shipping a production real-time risk engine for 40,000 positions in pure Python — what survived, what failed, and what I'd change.</p>
+                    <!-- Blog HTML files need to be generated from markdown posts in _posts/ -->
+                    <a href="./blogs/2026-04-07-risk-engine.html" class="btn btn-outline">Read More <i class="fa-solid fa-arrow-right"></i></a>
+                </div>
+                <div class="blog-card">
+                    <h3>Tweet Classification on the MediaEval Benchmarking Initiative</h3>
+                    <div class="date">May 3, 2022</div>
+                    <div class="project-tags">
+                        <span>Deep Learning</span><span>Data Science</span><span>NLP</span>
+                    </div>
+                    <p>A theoretical critical analysis of five prospective approaches to real/fake tweet binary classification on the MediaEval 2015 dataset.</p>
+                    <a href="./blogs/2022-05-03-tweet-classification.html" class="btn btn-outline">Read More <i class="fa-solid fa-arrow-right"></i></a>
+                </div>
+                <div class="blog-card">
+                    <h3>Diet and Nutrition Data Analysis</h3>
+                    <div class="date">May 15, 2022</div>
+                    <div class="project-tags">
+                        <span>Data Science</span><span>Data Analysis</span><span>Visualisation</span>
+                    </div>
+                    <p>Exploratory analysis of 587K food diary records from MyFitnessPal — uncovering eating habits, user behaviour, and surprising sugar intake trends.</p>
+                    <a href="./blogs/2022-05-15-diet-analytics.html" class="btn btn-outline">Read More <i class="fa-solid fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PUBLICATIONS -->
+    <section id="publications">
+        <div class="container">
+            <div class="section-header fade-in">
+                <h2>Publications</h2>
+                <div class="accent-line"></div>
+            </div>
+            <div class="pub-grid fade-in">
+                <div class="pub-card">
+                    <h3><i class="fa-solid fa-file-lines" style="color: var(--accent); margin-right: 8px;"></i>Detecting Surface Cracks on Buildings using Computer Vision</h3>
+                    <p>Computer vision approach for automated structural defect detection using deep learning.</p>
+                    <a href="https://github.com/skth5199" target="_blank" class="btn btn-outline"><i class="fa-brands fa-github"></i> View Publication</a>
+                </div>
+                <div class="pub-card">
+                    <h3><i class="fa-solid fa-file-lines" style="color: var(--accent); margin-right: 8px;"></i>Identification of Criminal Hotspots using Machine Learning</h3>
+                    <p>Machine learning methodology to identify and predict criminal hotspots from data.</p>
+                    <a href="https://github.com/skth5199" target="_blank" class="btn btn-outline"><i class="fa-brands fa-github"></i> View Publication</a>
+                </div>
+            </div>
+            <div class="certs fade-in">
+                <h3>Certifications</h3>
+                <ul>
+                    <li><i class="fa-solid fa-certificate" style="color: var(--accent); margin-right: 6px;"></i>Deep Learning Specialisation – Andrew Ng (Coursera)</li>
+                    <li><i class="fa-solid fa-certificate" style="color: var(--accent); margin-right: 6px;"></i>Data Scientist with Python – DataCamp Career Track</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- AI AGENT -->
+    <section id="agent" class="agent-section">
+        <div class="container">
+            <div class="agent-card fade-in">
+                <i class="fa-solid fa-robot" style="font-size: 2.5rem; color: var(--accent); margin-bottom: 20px;"></i>
+                <h2>Chat with My AI Agent</h2>
+                <p>I've deployed an AI agent trained on my background, experience, and knowledge. Ask it anything about my work, skills, or approach to quantitative development — it's an agent version of me.</p>
+                <a href="https://huggingface.co/spaces/sri82176319283791/CV_chat" target="_blank" class="btn btn-primary"><i class="fa-solid fa-comments"></i> Chat with Sri's AI Agent</a>
+                <div class="agent-iframe-wrapper">
+                    <iframe src="https://huggingface.co/spaces/sri82176319283791/CV_chat" title="Sri's AI Agent" loading="lazy"></iframe>
+                    <noscript><p>AI Agent requires JavaScript. <a href="https://huggingface.co/spaces/sri82176319283791/CV_chat" target="_blank">Open directly</a>.</p></noscript>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FITNESS -->
+    <section id="fitness">
+        <div class="container">
+            <div class="fitness-card fade-in">
+                <i class="fa-solid fa-dumbbell"></i>
+                <h3>Fitness & Nutrition</h3>
+                <p>I'm passionate about fitness and nutrition — the same data-driven rigour I apply to risk systems, I apply to training and diet. Learnings, protocols, and data analysis coming soon.</p>
+                <span class="btn btn-disabled"><i class="fa-solid fa-lock"></i> Coming Soon</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- EDUCATION -->
+    <section id="education" style="background: var(--bg-secondary);">
+        <div class="container">
+            <div class="section-header fade-in">
+                <h2>Education</h2>
+                <div class="accent-line"></div>
+            </div>
+            <div class="edu-grid fade-in">
+                <div class="edu-card">
+                    <h3>University of Southampton</h3>
+                    <div class="degree">MSc Computer Science</div>
+                    <div class="distinction"><i class="fa-solid fa-award" style="color: var(--accent);"></i> Distinction | Completed October 2021</div>
+                    <p>In-depth knowledge and hands-on experience in Data Science and Machine Learning</p>
+                </div>
+                <div class="edu-card">
+                    <h3>Amrita School of Engineering, Bangalore</h3>
+                    <div class="degree">BE Computer Science and Engineering</div>
+                    <div class="distinction"><i class="fa-solid fa-award" style="color: var(--accent);"></i> Distinction | Completed April 2020</div>
+                    <p>Data Structures & Algorithms, OS, ML & AI, Computer Networks, Software Engineering, Databases</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="contact-section">
+        <div class="container">
+            <div class="contact-content fade-in">
+                <div class="section-header" style="text-align: center;">
+                    <h2>Get in Touch</h2>
+                    <div class="accent-line" style="margin: 16px auto 0;"></div>
+                </div>
+                <div class="contact-audiences">
+                    <p><strong>Looking to hire a senior quant developer?</strong> Let's talk about what I can bring to your team.</p>
+                    <p><strong>Breaking into quant dev and want guidance?</strong> I mentor on career strategy, technical prep, and first-role positioning.</p>
+                </div>
+                <div class="contact-links">
+                    <a href="mailto:srikanthtk99@gmail.com"><i class="fa-solid fa-envelope"></i> srikanthtk99@gmail.com</a>
+                    <a href="https://linkedin.com/in/srikanth-srivenkata-53263a140" target="_blank"><i class="fa-brands fa-linkedin"></i> LinkedIn</a>
+                    <a href="https://github.com/skth5199" target="_blank"><i class="fa-brands fa-github"></i> GitHub</a>
+                </div>
+                <a href="https://topmate.io/s_srikanth" target="_blank" class="btn btn-primary" style="font-size: 1.05rem; padding: 16px 36px;"><i class="fa-solid fa-calendar-check"></i> Book a Call with Sri</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Srivenkata Srikanth. Built with precision.</p>
+        </div>
+    </footer>
+
+    <script>
+        function toggleNav() {
+            document.getElementById('navLinks').classList.toggle('open');
+        }
+
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.getElementById('navLinks').classList.remove('open');
+            });
+        });
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>
