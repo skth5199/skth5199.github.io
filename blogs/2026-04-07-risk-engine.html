@@ -193,6 +193,10 @@
     <article class="blog-content">
         <div class="container">
 
+            <div style="background: var(--bg-card); border: 1px solid rgba(0, 191, 255, 0.2); border-radius: 8px; padding: 20px; margin-bottom: 40px; font-size: 0.85rem; color: var(--text-muted); line-height: 1.7;">
+                <strong style="color: var(--text-secondary);">Disclaimer:</strong> This article is a fictional educational piece written to illustrate architectural patterns and trade-offs in real-time Python systems. It does not describe any system at any current or former employer. All code, numbers, team details, and scenarios are entirely invented for pedagogical purposes. No proprietary or confidential information is disclosed.
+            </div>
+
             <h2>Why Pure Python?</h2>
             <p>Yes, a real-time risk engine in C++ or Rust would be faster. I know. You know. We can skip that part.</p>
             <p>The team I inherited had three people. We were pricing a book of ~40,000 positions across rates, FX, credit, and equity derivatives. Our latency target for a full portfolio re-risk was under 30 seconds. The existing system was a tangle of Excel VBA and a legacy C# service that nobody could deploy without a specific engineer's laptop. That engineer had left.</p>
