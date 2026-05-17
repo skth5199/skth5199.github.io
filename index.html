@@ -912,25 +912,9 @@
 </head>
 <body>
 
-    <!-- NAV -->
-    <nav class="nav">
-        <div class="container">
-            <a href="#" class="nav-logo">Sri.</a>
-            <ul class="nav-links" id="navLinks">
-                <li><a href="./about.html">About</a></li>
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#blog">Blog</a></li>
-                <li><a href="#agent">AI Agent</a></li>
-                <li><a href="#contact">Contact</a></li>
-                <li><a href="https://topmate.io/s_srikanth" target="_blank" class="btn btn-primary">Book a Call</a></li>
-            </ul>
-            <div class="hamburger" id="hamburger" onclick="toggleNav()">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        </div>
-    </nav>
+    <!-- NAV (injected by nav.js) -->
+    <div id="main-nav"></div>
+    <script src="./nav.js"></script>
 
     <!-- HERO -->
     <section class="hero" id="hero">
@@ -941,78 +925,13 @@
                 <p class="bio">I work in quantitative finance, building and scaling risk systems across asset classes. Currently VP at Bank of America, I've spent 4 years in cross-asset market risk — Fixed Income, FX, Equities — driving automation and engineering efficiency. I also write and mentor on breaking into quant development.</p>
                 <div class="hero-buttons">
                     <a href="https://topmate.io/s_srikanth" target="_blank" class="btn btn-primary"><i class="fa-solid fa-calendar-check"></i> Book a Call</a>
-                    <a href="#projects" class="btn btn-outline"><i class="fa-solid fa-code"></i> View My Work</a>
+                    <a href="./projects.html" class="btn btn-outline"><i class="fa-solid fa-code"></i> View My Work</a>
                 </div>
             </div>
         </div>
     </section>
 
 
-    <!-- PROJECTS -->
-    <section id="projects">
-        <div class="container">
-            <div class="section-header fade-in">
-                <h2>Projects</h2>
-                <div class="accent-line"></div>
-            </div>
-            <div class="projects-grid fade-in">
-                <div class="project-card">
-                    <h3>Backonaut – Lightweight Backtesting Engine</h3>
-                    <div class="date">May 2025</div>
-                    <p>Designed extensible OOP components for Strategy, DataFeed, Portfolio, and Execution. Integrated Yahoo Finance API for live historical data. Built custom strategy classes and automated PDF reporting.</p>
-                    <div class="project-tags">
-                        <span>Python</span><span>OOP</span><span>yfinance</span><span>Backtesting</span><span>Finance</span>
-                    </div>
-                    <a href="https://github.com/skth5199" target="_blank" class="btn btn-outline"><i class="fa-brands fa-github"></i> GitHub</a>
-                </div>
-                <div class="project-card">
-                    <h3>Monocular Depth Estimation via Transfer Learning</h3>
-                    <div class="date">June – August 2021</div>
-                    <p>Developed three depth estimation approaches as an alternative to expensive LIDAR (saving car owners $1000+). Compared Pix2pix, U-Net with DenseNet, and U-Net with MobileNetV2.</p>
-                    <div class="project-tags">
-                        <span>Deep Learning</span><span>Transfer Learning</span><span>Computer Vision</span><span>PyTorch</span>
-                    </div>
-                    <a href="https://github.com/skth5199" target="_blank" class="btn btn-outline"><i class="fa-brands fa-github"></i> GitHub</a>
-                </div>
-                <div class="project-card">
-                    <h3>Food & Nutrition Analytics</h3>
-                    <div class="date">April 2022</div>
-                    <p>Analysed 587K days of MyFitnessPal data across 9,900 users. Derived insights to aid supermarkets in stocking — potentially reducing 10,000+ tonnes of food waste.</p>
-                    <div class="project-tags">
-                        <span>Python</span><span>Data Analysis</span><span>Visualisation</span><span>Pandas</span>
-                    </div>
-                    <a href="https://github.com/skth5199" target="_blank" class="btn btn-outline"><i class="fa-brands fa-github"></i> GitHub</a>
-                </div>
-                <div class="project-card">
-                    <h3>Fraud Detection using Graph Machine Learning</h3>
-                    <div class="date">January 2022</div>
-                    <p>End-to-end Graph ML solution to detect fraud on a large financial dataset by Vesta. Leveraged graph-based representations for transaction network analysis.</p>
-                    <div class="project-tags">
-                        <span>Graph ML</span><span>Deep Learning</span><span>Python</span><span>Finance</span>
-                    </div>
-                    <a href="https://github.com/skth5199" target="_blank" class="btn btn-outline"><i class="fa-brands fa-github"></i> GitHub</a>
-                </div>
-                <div class="project-card">
-                    <h3>Query Optimizer</h3>
-                    <div class="date">March 2021</div>
-                    <p>Built a query optimiser and estimator for SJDB (designed by Dr Nicholas Gibbins). Implemented cost-based optimisation strategies for relational queries.</p>
-                    <div class="project-tags">
-                        <span>SQL</span><span>Databases</span><span>Query Optimisation</span>
-                    </div>
-                    <a href="https://github.com/skth5199" target="_blank" class="btn btn-outline"><i class="fa-brands fa-github"></i> GitHub</a>
-                </div>
-                <div class="project-card">
-                    <h3>Tweet Classification – MediaEval Benchmarking</h3>
-                    <div class="date">January 2021</div>
-                    <p>Theorised and critically analysed five NLP classification solutions for real/fake tweet detection on the MediaEval 2015 dataset.</p>
-                    <div class="project-tags">
-                        <span>NLP</span><span>Deep Learning</span><span>Machine Learning</span><span>Text Classification</span>
-                    </div>
-                    <a href="https://github.com/skth5199" target="_blank" class="btn btn-outline"><i class="fa-brands fa-github"></i> GitHub</a>
-                </div>
-            </div>
-        </div>
-    </section>
 
     <!-- BLOG -->
     <section id="blog" style="background: var(--bg-secondary);">
@@ -1055,21 +974,6 @@
     </section>
 
 
-    <!-- AI AGENT -->
-    <section id="agent" class="agent-section">
-        <div class="container">
-            <div class="agent-card fade-in">
-                <i class="fa-solid fa-robot" style="font-size: 2.5rem; color: var(--accent); margin-bottom: 20px;"></i>
-                <h2>Chat with My AI Agent</h2>
-                <p>I've deployed an AI agent trained on my background, experience, and knowledge. Ask it anything about my work, skills, or approach to quantitative development — it's an agent version of me.</p>
-                <a href="https://huggingface.co/spaces/sri82176319283791/CV_chat" target="_blank" class="btn btn-primary"><i class="fa-solid fa-comments"></i> Chat with Sri's AI Agent</a>
-                <div class="agent-iframe-wrapper">
-                    <iframe src="https://huggingface.co/spaces/sri82176319283791/CV_chat" title="Sri's AI Agent" loading="lazy"></iframe>
-                    <noscript><p>AI Agent requires JavaScript. <a href="https://huggingface.co/spaces/sri82176319283791/CV_chat" target="_blank">Open directly</a>.</p></noscript>
-                </div>
-            </div>
-        </div>
-    </section>
 
     <!-- FITNESS -->
     <section id="fitness">
@@ -1113,16 +1017,6 @@
     </footer>
 
     <script>
-        function toggleNav() {
-            document.getElementById('navLinks').classList.toggle('open');
-        }
-
-        document.querySelectorAll('.nav-links a').forEach(link => {
-            link.addEventListener('click', () => {
-                document.getElementById('navLinks').classList.remove('open');
-            });
-        });
-
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -1130,7 +1024,6 @@
                 }
             });
         }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
-
         document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
     </script>
 </body>

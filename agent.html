@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Agent | Srivenkata Srikanth</title>
+    <meta name="description" content="Chat with Sri's AI agent — trained on his background, experience, and knowledge in quantitative finance and Python engineering.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bg-primary: #0a0f1e;
+            --bg-secondary: #0d1b2a;
+            --bg-card: #111d2e;
+            --bg-card-hover: #152238;
+            --accent: #00bfff;
+            --accent-dim: #1e90ff;
+            --accent-glow: rgba(0, 191, 255, 0.15);
+            --text-primary: #f0f4f8;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --border: #1e293b;
+            --nav-height: 70px;
+            --max-width: 1200px;
+        }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        a { color: var(--accent); text-decoration: none; transition: color 0.2s; }
+        a:hover { color: var(--accent-dim); }
+        .container { max-width: var(--max-width); margin: 0 auto; padding: 0 24px; }
+
+        .nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            height: var(--nav-height);
+            background: rgba(10, 15, 30, 0.92);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+        }
+        .nav .container { display: flex; align-items: center; justify-content: space-between; width: 100%; }
+        .nav-logo { font-weight: 700; font-size: 1.2rem; color: var(--text-primary); }
+        .nav-links { display: flex; align-items: center; gap: 28px; list-style: none; }
+        .nav-links a { color: var(--text-secondary); font-size: 0.88rem; font-weight: 500; transition: color 0.2s; }
+        .nav-links a:hover { color: var(--text-primary); }
+        .btn {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 10px 22px; border-radius: 6px; font-weight: 600;
+            font-size: 0.9rem; transition: all 0.25s; border: none;
+            cursor: pointer; text-decoration: none;
+        }
+        .btn-primary { background: var(--accent); color: var(--bg-primary); }
+        .btn-primary:hover { background: var(--accent-dim); color: var(--bg-primary); transform: translateY(-1px); box-shadow: 0 4px 20px rgba(0, 191, 255, 0.3); }
+        .btn-outline { background: transparent; color: var(--accent); border: 1.5px solid var(--accent); }
+        .btn-outline:hover { background: var(--accent-glow); transform: translateY(-1px); }
+        .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; }
+        .hamburger span { width: 24px; height: 2px; background: var(--text-primary); border-radius: 2px; transition: all 0.3s; }
+
+        .agent-section {
+            padding-top: calc(var(--nav-height) + 60px);
+            padding-bottom: 100px;
+        }
+        .agent-card {
+            background: var(--bg-card);
+            border: 2px solid rgba(0, 191, 255, 0.3);
+            border-radius: 16px;
+            padding: 48px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .agent-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at center, rgba(0, 191, 255, 0.04) 0%, transparent 70%);
+        }
+        .agent-card > * { position: relative; }
+        .agent-card h2 { font-size: 1.8rem; font-weight: 800; margin-bottom: 16px; }
+        .agent-card p {
+            color: var(--text-secondary); font-size: 1rem;
+            max-width: 600px; margin: 0 auto 28px; line-height: 1.7;
+        }
+        .agent-card .btn { font-size: 1rem; padding: 14px 32px; margin-bottom: 32px; }
+        .agent-iframe-wrapper {
+            margin-top: 24px; border-radius: 12px;
+            overflow: hidden; border: 1px solid var(--border);
+        }
+        .agent-iframe-wrapper iframe { width: 100%; height: 600px; border: none; }
+
+        .fade-in { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+        .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+        footer { padding: 32px 0; text-align: center; border-top: 1px solid var(--border); font-size: 0.82rem; color: var(--text-muted); }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; position: fixed; top: var(--nav-height); left: 0; right: 0; bottom: 0; background: rgba(10, 15, 30, 0.98); flex-direction: column; justify-content: center; align-items: center; gap: 32px; }
+            .nav-links.open { display: flex; }
+            .nav-links a { font-size: 1.1rem; }
+            .hamburger { display: flex; }
+            .agent-card { padding: 32px 20px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- NAV (injected by nav.js) -->
+    <div id="main-nav"></div>
+    <script src="./nav.js"></script>
+
+    <section class="agent-section">
+        <div class="container">
+            <div class="agent-card fade-in">
+                <i class="fa-solid fa-robot" style="font-size: 2.5rem; color: var(--accent); margin-bottom: 20px;"></i>
+                <h2>Chat with My AI Agent</h2>
+                <p>I've deployed an AI agent trained on my background, experience, and knowledge. Ask it anything about my work, skills, or approach to quantitative development — it's an agent version of me.</p>
+                <a href="https://huggingface.co/spaces/sri82176319283791/CV_chat" target="_blank" class="btn btn-primary"><i class="fa-solid fa-comments"></i> Chat with Sri's AI Agent</a>
+                <div class="agent-iframe-wrapper">
+                    <iframe src="https://huggingface.co/spaces/sri82176319283791/CV_chat" title="Sri's AI Agent" loading="lazy"></iframe>
+                    <noscript><p>AI Agent requires JavaScript. <a href="https://huggingface.co/spaces/sri82176319283791/CV_chat" target="_blank">Open directly</a>.</p></noscript>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Srivenkata Srikanth. <a href="./index.html">Back to Home</a></p>
+        </div>
+    </footer>
+
+    <script>
+        const observer = new IntersectionObserver((entries) => { entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); }); }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>

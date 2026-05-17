@@ -332,28 +332,9 @@
 </head>
 <body>
 
-    <!-- NAV -->
-    <nav class="nav">
-        <div class="container">
-            <a href="./index.html" class="nav-logo">Sri.</a>
-            <ul class="nav-links" id="navLinks">
-                <li><a href="#about">About</a></li>
-                <li><a href="#experience">Experience</a></li>
-                <li><a href="#education">Education</a></li>
-                <li><a href="#publications">Publications</a></li>
-                <li><a href="./index.html#projects">Projects</a></li>
-                <li><a href="./index.html#blog">Blog</a></li>
-                <li><a href="./index.html#agent">AI Agent</a></li>
-                <li><a href="./index.html#contact">Contact</a></li>
-                <li><a href="https://topmate.io/s_srikanth" target="_blank" class="btn btn-primary">Book a Call</a></li>
-            </ul>
-            <div class="hamburger" id="hamburger" onclick="toggleNav()">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        </div>
-    </nav>
+    <!-- NAV (injected by nav.js) -->
+    <div id="main-nav"></div>
+    <script src="./nav.js"></script>
 
     <!-- ABOUT -->
     <section id="about" style="padding-top: calc(var(--nav-height) + 60px);">
@@ -523,20 +504,8 @@
     </footer>
 
     <script>
-        function toggleNav() {
-            document.getElementById('navLinks').classList.toggle('open');
-        }
-        document.querySelectorAll('.nav-links a').forEach(link => {
-            link.addEventListener('click', () => {
-                document.getElementById('navLinks').classList.remove('open');
-            });
-        });
         const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
+            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
         }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
         document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
     </script>
