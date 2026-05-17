@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diet and Nutrition Data Analysis | Srivenkata Srikanth</title>
+    <meta name="description" content="Exploratory analysis of 587K food diary records from MyFitnessPal — uncovering eating habits, user behaviour, and surprising sugar intake trends.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bg-primary: #0a0f1e;
+            --bg-secondary: #0d1b2a;
+            --bg-card: #111d2e;
+            --accent: #00bfff;
+            --accent-dim: #1e90ff;
+            --text-primary: #f0f4f8;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --border: #1e293b;
+        }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.7;
+        }
+        a { color: var(--accent); text-decoration: none; }
+        a:hover { color: var(--accent-dim); }
+        .container { max-width: 800px; margin: 0 auto; padding: 0 24px; }
+
+        .blog-nav {
+            position: sticky;
+            top: 0;
+            background: rgba(10, 15, 30, 0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            padding: 16px 0;
+            z-index: 100;
+        }
+        .blog-nav .container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .blog-nav a.back {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        .blog-nav a.back:hover { color: var(--text-primary); }
+
+        .blog-header {
+            padding: 80px 0 40px;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 48px;
+        }
+        .blog-header h1 {
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            font-weight: 800;
+            line-height: 1.3;
+            margin-bottom: 16px;
+        }
+        .blog-meta {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .blog-meta .date {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+        .blog-meta .tag {
+            padding: 3px 10px;
+            background: rgba(0, 191, 255, 0.08);
+            border: 1px solid rgba(0, 191, 255, 0.2);
+            border-radius: 12px;
+            font-size: 0.75rem;
+            color: var(--accent);
+            font-weight: 500;
+        }
+
+        .blog-content { padding-bottom: 80px; }
+        .blog-content h1 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin: 48px 0 16px;
+            padding-top: 16px;
+        }
+        .blog-content h2 {
+            font-size: 1.35rem;
+            font-weight: 700;
+            margin: 40px 0 14px;
+        }
+        .blog-content h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin: 28px 0 10px;
+            color: var(--accent);
+        }
+        .blog-content p {
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+            line-height: 1.8;
+        }
+        .blog-content ul, .blog-content ol {
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+            padding-left: 24px;
+            font-size: 0.95rem;
+        }
+        .blog-content li { margin-bottom: 8px; line-height: 1.7; }
+        .blog-content img {
+            max-width: 100%;
+            border-radius: 8px;
+            margin: 24px 0;
+            border: 1px solid var(--border);
+        }
+        .blog-content blockquote {
+            border-left: 3px solid var(--accent);
+            padding: 16px 20px;
+            margin: 24px 0;
+            background: var(--bg-card);
+            border-radius: 0 8px 8px 0;
+            font-style: italic;
+            color: var(--text-secondary);
+        }
+        .blog-content hr {
+            border: none;
+            border-top: 1px solid var(--border);
+            margin: 48px 0;
+        }
+        .insights-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 28px;
+            margin: 32px 0;
+        }
+        .insights-box h3 {
+            color: var(--text-primary);
+            margin-bottom: 12px;
+        }
+
+        footer {
+            padding: 32px 0;
+            text-align: center;
+            border-top: 1px solid var(--border);
+            font-size: 0.82rem;
+            color: var(--text-muted);
+        }
+
+        @media (max-width: 768px) {
+            .blog-header { padding: 60px 0 32px; }
+            .blog-content h1 { font-size: 1.4rem; }
+            .blog-content h2 { font-size: 1.2rem; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="blog-nav">
+        <div class="container">
+            <a href="../index.html" class="back"><i class="fa-solid fa-arrow-left"></i> Back to Portfolio</a>
+            <a href="../index.html" style="font-weight: 700; color: var(--text-primary);">Sri.</a>
+        </div>
+    </nav>
+
+    <header class="blog-header">
+        <div class="container">
+            <h1>Diet and Nutrition Data Analysis</h1>
+            <div class="blog-meta">
+                <span class="date"><i class="fa-regular fa-calendar"></i> May 15, 2022</span>
+                <span class="tag">Data Science</span>
+                <span class="tag">Data Analysis</span>
+                <span class="tag">Data Visualisation</span>
+            </div>
+        </div>
+    </header>
+
+    <article class="blog-content">
+        <div class="container">
+
+            <p>I am passionate about fitness. Nutrition is a crucial part of fitness and hence, I love learning about the way nutrition works, and about people's habits and trends when it comes to food. I have gone through quite a bit of fitness content available online and felt like it was time I did some analysis of my own.</p>
+
+            <h1>Dataset Used</h1>
+            <p>The dataset used for this was originally obtained from MyFitnessPal. It contains 587,187 days of food diary records logged by 9.9K users over a 208 day period from September 2014 through April 2015. The time-series data includes a unique anonymised user id, date, list of foods and their corresponding macro-nutrient breakdown. Hats off to <a href="https://ink.library.smu.edu.sg/sis_research/4380/">Ingmar Weber and Palakorn Achananuparp</a> for making this data available.</p>
+
+            <h1>Exploratory Data Analysis</h1>
+
+            <h2>Food Demand Analysis</h2>
+            <p>First, I wanted to find the top foods consumed overall. I developed a function which picked them out month-wise and the results were as follows:</p>
+            <img src="https://user-images.githubusercontent.com/26760537/168484800-1e548a88-5aca-4aaa-8062-8f177dbbf213.png" alt="Top foods consumed by month">
+            <p>It was obvious from this chart how much people love their favourite cuppa. Coffee was the unparallelled choice throughout. The simple reason behind this could be that coffee is not just a drink — it is one of those simple pleasures that people enjoy as a part of their daily routine. It is also something that brings people together.</p>
+            <p>Following this were bananas — the most consumed fruits on a daily basis. Strawberries were also widely consumed but were superseded by bananas. However, this was reversed in the month of April, likely due to the onset of summer.</p>
+            <p>Spinach was the most consumed vegetable and salted butter was the most consumed fat source. This might be surprising as oil is known to be used a lot more than butter. The reason behind this result is likely the variety when it comes to oil (olive oil, vegetable oil, sunflower oil) — there is no such variety with butter, causing statistical convergence on a single product.</p>
+            <p>Chicken breast was the most popular protein source — no surprise as it is lean, high in protein and widely available.</p>
+            <p>This analysis can aid grocery stores in effectively stocking up on groceries. Anticipating the correct amount of need can help them avoid low profits due to products going out of stock and food wastage caused by products expiring.</p>
+
+            <h2>User Analysis</h2>
+            <p>The number of active users was analysed on each day between September 2014 and April 2015.</p>
+            <img src="https://user-images.githubusercontent.com/26760537/168489021-b6e0b8f8-5a40-49d3-a24b-b76e9e92c4f0.png" alt="Active users over time">
+            <p>A sharp drop can be seen right after day 100 — determined to be Christmas. This makes sense as most people spend this time on vacation or with families and tend to get off their diet. The calories and macros are not available at most family dinners to input into the app either.</p>
+            <p>Following this, there is a dramatic rise around the new year. A lot of people would have put on holiday weight and would be motivated to shed it. The new year also motivates people to make healthy changes.</p>
+            <p>There was another serious drop towards the end of March. The most plausible explanation is that many users who started on January 1 were on a 3-month diet (one of the most popular durations), and some users must have stopped due to not noticing benefits or lack of motivation.</p>
+
+            <h3>Day of Week Analysis</h3>
+            <img src="https://user-images.githubusercontent.com/26760537/168489880-1cb252c8-49b6-488f-ac0d-39102365b0b2.png" alt="Start day distribution">
+            <p>There was a significant difference between Monday and all other days. Monday makes for a stronger start and easier tracking. In contrast, Wednesday was much lower — mid-week motivations at an all-time low, so most people would decide to start next Monday instead.</p>
+
+            <h3>Usage Duration</h3>
+            <img src="https://user-images.githubusercontent.com/26760537/168489371-66354141-340d-4ca4-922f-1ff483951870.png" alt="Days of app usage">
+            <p>A large number of users used the app for just 72 hours, with the majority (422) just using it on the first day — likely users wanting to try the app before committing.</p>
+            <p>Following this drastic drop, usage gradually declines. However, there is a significant rise approaching the 180 mark (178 days highest with 1190 users) — likely the result of the many 180-day diet challenges available online.</p>
+            <p>The mean was 59 days and the median was 42 days. The mean being higher indicates positive skew by some extremely consistent users.</p>
+
+            <h3>User Consistency</h3>
+            <img src="https://user-images.githubusercontent.com/26760537/168489522-71830e24-1878-44dd-8078-167b85c7b65c.png" alt="Users missing less than 10 days">
+            <p>Over a quarter of users missed less than 10 days. However, this was skewed by users who used the app for less than 10 days total.</p>
+            <img src="https://user-images.githubusercontent.com/26760537/168489597-81ed6875-cd6f-4b04-864d-651164765ccd.png" alt="Adjusted consistency chart">
+            <p>After filtering out users with fewer than 10 days of usage, the number fell by over 1000 users but remained comparatively high.</p>
+            <img src="https://user-images.githubusercontent.com/26760537/168489705-1db024ca-5c96-48c5-803e-46627ce238e9.png" alt="Serious users - 90+ days, under 10 missed">
+            <p>Approximately 1,100 people consistently tracked food for 3 months or more and missed under 20 days. These serious and committed users make up about 1/9th of the total population.</p>
+
+            <h3>Meals Per Day</h3>
+            <img src="https://user-images.githubusercontent.com/26760537/168489285-d3412317-450d-47f2-b24e-9e98a7975ca7.png" alt="Meals per day distribution">
+            <p>Most people ate 4 meals a day.</p>
+
+            <h3>Goal Achievement</h3>
+            <img src="https://user-images.githubusercontent.com/26760537/168489821-c3eac14e-c17d-49c7-88dd-fb58e76c0ba5.png" alt="Calorie goal achievement">
+            <p>Just 15% of users significantly exceeded their calorie goal by over 100 calories. The remaining 85% successfully stuck to their goal overall.</p>
+
+            <h3>Sugar Intake Analysis</h3>
+            <img src="https://user-images.githubusercontent.com/26760537/168490126-eee7ae0e-9f1d-4df4-8cbf-545deb5516da.png" alt="Sugar intake risk distribution">
+            <p>Half the userbase was at risk of developing type II diabetes. 20% were at high risk, consuming over 200 grams of sugar per day.</p>
+            <p>In my opinion, sugar is one of the worst things you can put in your body. It has no nutritional benefit, is addictive and inflammatory. Using natural sweeteners such as Stevia would greatly help in combating type 2 diabetes and making the world a healthier place.</p>
+
+            <h1>Key Insights Derived</h1>
+
+            <div class="insights-box">
+                <h3>Insights to Aid Supermarkets</h3>
+                <ul>
+                    <li>Coffee was the most popular item consumed</li>
+                    <li>Banana was the most consumed fruit</li>
+                    <li>The most popular protein source was chicken breast</li>
+                </ul>
+            </div>
+
+            <div class="insights-box">
+                <h3>Insights About People and Nutrition</h3>
+                <ul>
+                    <li>Sharp drop during Christmas and a dramatic rise on January 1 (New Year)</li>
+                    <li>On average, 82% of users met their goal and 85% were in a calorie deficit</li>
+                    <li>The percentage of serious users (logged over 3 months, missed less than 20 days) was 11.11%</li>
+                    <li>20.6% were suspected to be at risk of getting type 2 diabetes</li>
+                    <li>Monday was the most popular start day; Wednesday was the least</li>
+                </ul>
+            </div>
+
+        </div>
+    </article>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Srivenkata Srikanth. <a href="../index.html">Back to Portfolio</a></p>
+        </div>
+    </footer>
+</body>
+</html>

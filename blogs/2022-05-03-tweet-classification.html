@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tweet Classification on the MediaEval Benchmarking Initiative | Srivenkata Srikanth</title>
+    <meta name="description" content="A theoretical critical analysis of five prospective approaches to real/fake tweet binary classification on the MediaEval 2015 dataset.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bg-primary: #0a0f1e;
+            --bg-secondary: #0d1b2a;
+            --bg-card: #111d2e;
+            --accent: #00bfff;
+            --accent-dim: #1e90ff;
+            --text-primary: #f0f4f8;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --border: #1e293b;
+        }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.7;
+        }
+        a { color: var(--accent); text-decoration: none; }
+        a:hover { color: var(--accent-dim); }
+        .container { max-width: 800px; margin: 0 auto; padding: 0 24px; }
+
+        .blog-nav {
+            position: sticky;
+            top: 0;
+            background: rgba(10, 15, 30, 0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            padding: 16px 0;
+            z-index: 100;
+        }
+        .blog-nav .container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .blog-nav a.back {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        .blog-nav a.back:hover { color: var(--text-primary); }
+
+        .blog-header {
+            padding: 80px 0 40px;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 48px;
+        }
+        .blog-header h1 {
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            font-weight: 800;
+            line-height: 1.3;
+            margin-bottom: 12px;
+        }
+        .blog-header .subtitle {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+            font-style: italic;
+        }
+        .blog-meta {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .blog-meta .date {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+        .blog-meta .tag {
+            padding: 3px 10px;
+            background: rgba(0, 191, 255, 0.08);
+            border: 1px solid rgba(0, 191, 255, 0.2);
+            border-radius: 12px;
+            font-size: 0.75rem;
+            color: var(--accent);
+            font-weight: 500;
+        }
+
+        .blog-content { padding-bottom: 80px; }
+        .blog-content h1 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin: 48px 0 16px;
+            padding-top: 16px;
+        }
+        .blog-content h2 {
+            font-size: 1.35rem;
+            font-weight: 700;
+            margin: 40px 0 14px;
+        }
+        .blog-content h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin: 28px 0 10px;
+            color: var(--accent);
+        }
+        .blog-content p {
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+            line-height: 1.8;
+        }
+        .blog-content ul, .blog-content ol {
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+            padding-left: 24px;
+            font-size: 0.95rem;
+        }
+        .blog-content li { margin-bottom: 8px; line-height: 1.7; }
+        .blog-content img {
+            max-width: 100%;
+            border-radius: 8px;
+            margin: 24px 0;
+            border: 1px solid var(--border);
+        }
+        .blog-content blockquote {
+            border-left: 3px solid var(--accent);
+            padding: 16px 20px;
+            margin: 24px 0;
+            background: var(--bg-card);
+            border-radius: 0 8px 8px 0;
+            font-style: italic;
+            color: var(--text-secondary);
+        }
+        .blog-content pre {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 20px;
+            overflow-x: auto;
+            margin: 24px 0;
+            font-size: 0.82rem;
+            line-height: 1.6;
+        }
+        .blog-content code {
+            font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+            font-size: 0.85em;
+        }
+        .blog-content p code {
+            background: var(--bg-card);
+            padding: 2px 6px;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+        }
+        .blog-content hr {
+            border: none;
+            border-top: 1px solid var(--border);
+            margin: 48px 0;
+        }
+        .references {
+            margin-top: 48px;
+            padding-top: 32px;
+            border-top: 1px solid var(--border);
+        }
+        .references h1 {
+            font-size: 1.3rem;
+            margin-bottom: 16px;
+        }
+        .references ol {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            line-height: 1.7;
+        }
+        .references li {
+            margin-bottom: 6px;
+        }
+
+        footer {
+            padding: 32px 0;
+            text-align: center;
+            border-top: 1px solid var(--border);
+            font-size: 0.82rem;
+            color: var(--text-muted);
+        }
+
+        @media (max-width: 768px) {
+            .blog-header { padding: 60px 0 32px; }
+            .blog-content h1 { font-size: 1.4rem; }
+            .blog-content h2 { font-size: 1.2rem; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="blog-nav">
+        <div class="container">
+            <a href="../index.html" class="back"><i class="fa-solid fa-arrow-left"></i> Back to Portfolio</a>
+            <a href="../index.html" style="font-weight: 700; color: var(--text-primary);">Sri.</a>
+        </div>
+    </nav>
+
+    <header class="blog-header">
+        <div class="container">
+            <h1>Tweet Classification on the MediaEval Benchmarking Initiative for Multimedia Evaluation Data</h1>
+            <p class="subtitle">A theoretical critical analysis of prospective approaches</p>
+            <div class="blog-meta">
+                <span class="date"><i class="fa-regular fa-calendar"></i> May 3, 2022</span>
+                <span class="tag">Deep Learning</span>
+                <span class="tag">Data Science</span>
+                <span class="tag">NLP</span>
+            </div>
+        </div>
+    </header>
+
+    <article class="blog-content">
+        <div class="container">
+
+            <p>This analysis is my attempt at theorizing a solution for a problem in a situation where the complete dataset is not available yet. This work can be used as an example to generate similar theoretical proposals, which can be beneficial in the early stages of data consulting or research projects, where confidentiality has not yet been established.</p>
+
+            <h1>Introduction and Data Analysis</h1>
+
+            <h2>Problem Description</h2>
+            <p>The task at hand was to build binary classification models based on the given dichotomy of tweets that are categorized into 'real' and 'fake'. Five complete approaches to achieve this are discussed and critically analyzed. Their strengths and weaknesses are compared, and the approaches are ranked based on this analysis. The dataset provided was The MediaEval 2015 "verifying multimedia use" dataset which consisted of social media posts for which the social media identifiers were shared along with the tweet text and some additional characteristics of the post.</p>
+
+            <h2>Dataset Characteristics</h2>
+            <ul>
+                <li><strong>Data Format:</strong> The data was provided in the form of a text file with the fields separated by tabs. Two separate text files were provided, one for training and the other for testing. The data was converted into a CSV file using Microsoft Excel.</li>
+                <li><strong>Data size and Volume:</strong> The dataset consisted of 14,483 tuples and 7 attributes to define them. The size of the (train and test) data was 3.28 MB put together.</li>
+            </ul>
+
+            <h2>Data Features and Quality</h2>
+            <p>There are three classes in the raw dataset, namely Fake, Humor and Real. The fake class consists of reposts of real multimedia, such as real photos from the past re-posted as being associated to a current event, digitally manipulated multimedia, and synthetic multimedia, such as artworks or snapshots presented as real imagery. The humor labelled tweets may be considered as fake, but it is better to discard them to avoid exacerbating the high data bias due to the existence of significantly higher number of fake tweets than that of real tweets (9464 fake tweets with humor included and 6833 fake tweets without inclusion of the same as compared to 5004 real tweets).</p>
+            <p>77% of the tweets were in English, followed by Spanish at 8%. Remaining tweets of 30 languages were lower than 2% each. The language of tweets was detected using the 'langdetect' library and the tweets were translated to English using the 'googletrans' library.</p>
+            <p>The data quality was assessed based on six parameters. The data had very low null value rate (Completeness), outstanding Accuracy and Consistency (extracted via Twitter API), high Uniqueness (86% unique tweets), strong Validity, and only Timeliness needed improvement (2015 data). Four parameters were found to be very high, one high, and just one needed improvement — hence the quality of data was stated to be high.</p>
+
+            <h1>Algorithm Design</h1>
+
+            <h2>Approach 1 — Conventional NLP Pipeline</h2>
+            <h3>Preprocessing</h3>
+            <p>Stopwords removed using the 'nltk' stopwords list. Tokenization performed using the nltk tokenizer. Lemmatization performed after POS tagging — preferred over stemming because it performs morphological analysis rather than merely cutting off the suffix.</p>
+            <h3>Feature Extraction</h3>
+            <p>"Bag of n-grams" representation used via 'CountVectorizer'. Just unigrams considered to keep computational burden minimal. Count matrix normalized using TF-IDF via 'TfidfTransformer' to reduce the influence of tokens that occur very frequently.</p>
+            <h3>Feature Selection &amp; Dimensionality Reduction</h3>
+            <p>Chi-squared test performed to determine if a particular feature and the class label were uniform. Features over the threshold were kept; the rest discarded.</p>
+            <h3>Modelling</h3>
+            <p>Multinomial NB (specifically made for classification with discrete features) and SVM (works great with text token classification). Both trained and the model with the higher F1-score used.</p>
+
+            <h2>Approach 2 — Two-Level Classification</h2>
+            <p>Based on a unique two-level classification model. The working is portrayed below:</p>
+            <img src="https://user-images.githubusercontent.com/26760537/167206370-38e20f3b-1c23-4987-b27d-9a1cb578ba1c.png" alt="Two-level classification architecture diagram">
+            <h3>Preprocessing</h3>
+            <p>Stop words removed, tweets tokenized, POS tagged and lemmatized similar to the first approach.</p>
+            <h3>Feature Extraction</h3>
+            <p>Tokens converted to feature vectors using 'TfidfVectorizer'. Timestamps converted to Unix timestamps using 'datetime' library (making them ordinal). ImageIDs one-hot encoded for equal weightage.</p>
+            <h3>Modelling</h3>
+            <p>TFIDF vectors undergo KMeans clustering with Jaccard's distance. Clusters labelled as topics. All tweets classified as real or fake using SVM at the topic level, then results added to each tweet. Random Forest classifier used for final tweet-level classification — chosen because it reduces overfitting while improving accuracy and handles high dimensional data well.</p>
+
+            <h2>Approach 3 — Deep Neural Network with Feature Engineering</h2>
+            <h3>Preprocessing</h3>
+            <p>Tweets normalized using regular expressions to map syntactic, lexical and Twitter-specific forms. Hashtags and mentions stored as separate attributes. Tweets tokenized and stop words removed.</p>
+            <h3>Feature Extraction &amp; Selection</h3>
+            <p>Text tokens transformed into TF-IDF representations. ImageId, hashtags and mentions one-hot encoded. PCA used to reduce dimensionality of only the TF-IDF representations — ensuring low redundancy through orthogonal components with high differentiating potential.</p>
+            <h3>Modelling</h3>
+            <p>Deep neural network with embedding layer, flatten layer, and two dense layers (ReLU and Sigmoid). Dropout regularization to avoid overfitting. Adam optimizer and binary cross-entropy loss function.</p>
+
+            <h2>Approach 4 — Bi-directional LSTM</h2>
+            <h3>Preprocessing</h3>
+            <p>Special characters removed, words tokenized by converting each sequence into integer encoded representation and normalizing sequence length. No stopword removal or TF-IDF — the LSTM accounts for word order.</p>
+            <h3>Feature Extraction</h3>
+            <p>Transfer Learning used: GloVe embeddings and Twitter embeddings stacked together using numpy.hstack — demonstrated better performance than using any single embedding or training from scratch.</p>
+            <h3>Modelling</h3>
+            <p>Bi-directional LSTM with embedding layer, dropout, convolutions (64,4) stacked on top of each state vector, max pooling, Dense 64 (ReLU), and output Dense layer (Sigmoid). Binary cross-entropy with Adam optimizer. Hyperparameter tuning of batch size, epochs, dropout rate, and LSTM size performed.</p>
+
+            <h2>Approach 5 — Ensemble Learning</h2>
+            <p>Uses algorithms from approaches 1–4 as sub-models in an ensemble voting scenario. Due to diversity of approaches covering different aspects (tweet text classification, inter-tweet relations, hidden patterns via DNN, and sequential patterns via LSTM), they complement each other.</p>
+            <img src="https://user-images.githubusercontent.com/26760537/167206101-c0ae6d8a-0e96-44cb-9d18-895584fdd53b.png" alt="Ensemble approach architecture diagram">
+            <p>Predictions from all 4 models evaluated. Class with maximum votes taken as outcome. In case of a tie, approaches 1 and 2 votes multiplied by 0.5 (deep learning models in approaches 3 and 4 act as tie breakers).</p>
+
+            <h1>Evaluation</h1>
+
+            <h2>Strengths and Weakness Analysis</h2>
+
+            <h3>Approach 1</h3>
+            <p><strong>Strengths:</strong> Lightweight processing; lemmatization provides uniform word vectors; Multinomial NB and SVM known to be excellent for text classification.</p>
+            <p><strong>Weaknesses:</strong> Does not preserve word order; TF-IDF doesn't capture semantics or co-occurrences; could benefit from ensembling the two models.</p>
+
+            <h3>Approach 2</h3>
+            <p><strong>Strengths:</strong> Two-level approach accounts for inter-tweet relations; considers multiple attributes beyond just tweet text; topic clustering uncovers unique patterns.</p>
+            <p><strong>Weaknesses:</strong> Determining optimal cluster count is difficult; computationally demanding without dimensionality reduction; second model performance depends on first level quality.</p>
+
+            <h3>Approach 3</h3>
+            <p><strong>Strengths:</strong> Hashtags and mentions as separate attributes; hyperparameter tuning performed; deep neural network likely achieves higher accuracy than ML methods.</p>
+            <p><strong>Weaknesses:</strong> Susceptible to curse of dimensionality; data size may be insufficient for neural network training; does not consider word order.</p>
+
+            <h3>Approach 4</h3>
+            <p><strong>Strengths:</strong> Word context considered by LSTM; hyperparameter tuning guarantees strong performance; dropout regularization prevents overfitting.</p>
+            <p><strong>Weaknesses:</strong> Computationally intensive; dataset size may be insufficient; tweets may be too short for LSTM to draw meaningful sequential patterns; convolutions on state vectors could hurt performance.</p>
+
+            <h3>Approach 5</h3>
+            <p><strong>Strengths:</strong> Best performance highly likely as an ensemble; sub-models focus on different aspects; equal voting gives balanced weightage.</p>
+            <p><strong>Weaknesses:</strong> Very heavy to train; computational cost may not justify performance boost; deep learning models acting as tiebreakers could fail with insufficient data.</p>
+
+            <h2>Final Ranking</h2>
+            <p>The approaches are ranked considering speed and correctness:</p>
+            <p><strong>Approach 3 &gt; Approach 4 &gt; Approach 5 &gt; Approach 2 &gt; Approach 1</strong></p>
+            <p>Approach 3 strikes the best balance between accuracy and speed. Approach 4 has excellent potential but only uses tweet text. Approach 5 is most accurate but computationally expensive. Approach 2 has reliability concerns with its two-level dependency. Approach 1 is fastest but most limited.</p>
+
+            <h1>Conclusion</h1>
+            <p>Five potential analogous approaches were discussed. Key takeaways: Deep Learning approaches will supersede ML algorithms given sufficient data and computation. Regularization, feature selection and dimensionality reduction must be carefully balanced. Hyperparameter tuning is essential. Word order in tweets can uncover important information despite their small size.</p>
+            <p>Future work should incorporate image classification and cross-validation to experimentally determine F1 scores and timing for a more robust ranking.</p>
+
+            <div class="references">
+                <h1>References</h1>
+                <ol>
+                    <li>IT Pro team: 'How to measure data quality', 2 Mar 2020</li>
+                    <li>C.D. Manning, P. Raghavan and H. Schuetze (2008). Introduction to Information Retrieval. Cambridge University Press, pp. 234-265.</li>
+                    <li>Zhiwei Jin, Juan Cao, Yazi Zhang, and Zhang Yongdong. 2015. MCG-ICT at MediaEval 2015: Verifying Multimedia Use with a Two-Level Classification Model.</li>
+                    <li>Tripathy, R.M. et al. (2014), "Theme based clustering of tweets", Proceedings of the 1st IKDD Conference on Data Sciences.</li>
+                    <li>'Jaccard index', Wikipedia.</li>
+                    <li>Nicolas Foucault and Antoine Courtin. 2016. Automatic Classification of Tweets for Analyzing Communication Behavior of Museums. LREC 2016.</li>
+                    <li>Faizan Shaikh, 'Deep Learning vs. Machine Learning', Analytics Vidhya.</li>
+                    <li>Deep Learning (LSTM) for Tweet Classification, Kaggle.</li>
+                    <li>Sahoo A.K., Pradhan C., Das H. (2020) Performance Evaluation of Different Machine Learning Methods and Deep-Learning Based CNN. Springer.</li>
+                    <li>Shubham Singh, "NLP Essentials: Removing Stopwords", Analytics Vidhya.</li>
+                    <li>Hafsa Jabeen, "Stemming and Lemmatization in Python", DataCamp.</li>
+                    <li>Jason Brownlee, "A Gentle Introduction to the Bag-of-Words Model", Machine Learning Mastery.</li>
+                    <li>Nikolai Janakiev, "Practical Text Classification With Python and Keras", Real Python.</li>
+                    <li>"Principal Component Analysis", International Encyclopedia of Education (Third Edition), 2010.</li>
+                    <li>"Choosing what kind of classifier to use", Stanford NLP.</li>
+                    <li>Monkey Learn, "Text Classification".</li>
+                    <li>Great Learning Team, "Random Forest Algorithm — An Overview".</li>
+                    <li>Julia Kho, "Why Random Forest is My Favorite Machine Learning Model", Towards Data Science.</li>
+                    <li>Sanket Doshi, "Various Optimization Algorithms For Training Neural Network", Towards Data Science.</li>
+                    <li>Karsten Eckhardt, "Choosing the right Hyperparameters for a simple LSTM using Keras", Towards Data Science.</li>
+                    <li>Prasoon Singh, "Fundamentals of Bag Of Words and TF-IDF", Analytics Vidhya.</li>
+                    <li>Christina Boididou et al. 2015. Verifying Multimedia Use at MediaEval 2015. In MediaEval.</li>
+                </ol>
+            </div>
+
+        </div>
+    </article>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Srivenkata Srikanth. <a href="../index.html">Back to Portfolio</a></p>
+        </div>
+    </footer>
+</body>
+</html>
